@@ -6,7 +6,7 @@
 #    By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/25 02:07:52 by nlegrand          #+#    #+#              #
-#    Updated: 2022/11/26 16:15:47 by nlegrand         ###   ########.fr        #
+#    Updated: 2022/11/28 21:09:56 by nlegrand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,10 +20,12 @@ INCDIR	=	incs
 LIBDIR	=	libs
 
 SRCS	:=	fdf.c \
+			bresenham.c \
 			fdf_utils.c \
-			nlgw.c \
 			parser.c \
-			parser2.c
+			parser2.c \
+			hook_utils.c \
+			test_utils.c
 OBJS	:=	$(SRCS:.c=.o)
 SRCS	:=	$(addprefix $(SRCDIR)/, $(SRCS))
 OBJS	:=	$(addprefix $(OBJDIR)/, $(OBJS))

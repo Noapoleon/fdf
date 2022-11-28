@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 19:39:05 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/11/26 16:14:29 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/11/28 21:56:03 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,64 +23,90 @@
 # include <fcntl.h>
 
 // Window Settings
-#define WIN_WIDTH 800
-#define WIN_HEIGHT 600
-#define WIN_TITLE "Test window"
+#ifndef WIN_WIDTH
+ #define WIN_WIDTH 800
+#endif
+#ifndef WIN_HEIGHT
+ #define WIN_HEIGHT 800
+#endif
+#ifndef WIN_TITLE
+ #define WIN_TITLE "Test window"
+#endif
 
 // Key IDs
 # define K_ESCAPE	0xff1b
 
 // Vertex Bit Masks
-# define M_ZPOS	0x00000000ffffffff
-# define M_COL	0xffffffff00000000
-# define M_COLR	0xff00000000000000
-# define M_COLG	0x00ff000000000000
-# define M_COLB	0x0000ff0000000000
-# define M_COLA	0x000000ff00000000
-# define HEX_SET	"0123456789ABCDEF"
+#define M_COL	0x00ffffff
+#define M_COLR	0x00ff0000
+#define M_COLG	0x0000ff00
+#define M_COLB	0x000000ff
+#define HEX_SET	"0123456789abcdef"
 
-typedef struct s_nlgw	t_nlgw;
+typedef struct s_fdf	t_fdf;
+typedef struct s_window t_window;
 typedef struct s_map	t_map;
 typedef struct s_vertex	t_vertex;
-struct s_nlgw
+
+struct s_fdf
+{
+	void		*id;
+	t_window	*win;
+	t_map		*map;
+};
+struct s_window
 {
 	void	*id;
-	void	*window;
+	char	*title;
 	int		width;
 	int		height;
-	char	*title;
 };
 struct s_map
 {
-	int				fd;
-	int				width; // -1 by default ?? (for now it'll be 0)
-	int				height;
-	unsigned long	**m;
+	int			fd;
+	int			width;
+	int			height;
+	t_vertex	**vs;
 };
-//struct s_vertex
-//{
-//	int z;
-//	int col;
-//};
+// OMFG IM SO FUCKING STUPID I FORGOT TO STORE THE X AND Y TOOO (maybe i don't need to actually, we'll see)
+// ALSO COLOR SHOULD BE STORED AS AN INT
+struct s_vertex
+{
+	int x;
+	int y;
+	int	z;
+	int	c;
+};
 
 // FDF UTILS
-int		set_hooks(t_nlgw *nlgw);
-int		key_hook(int keycode, void *nlgw);
+void	fdf_setup(t_fdf *fdf, t_window *win, t_map *map);
+void	win_init(t_window *win, int width, int height, char *title);
+void	fdf_terminate(t_fdf *fdf);
 
-// NLGW
-int		nlgw_setup(t_nlgw *nlgw, int width, int height, char *title);
-void	nlgw_terminate(t_nlgw *nlgw);
+// HOOK UTILS
+int		set_hooks(t_fdf *fdf);
+int		key_hook(int keycode, void *param);
 
 // PARSER
 int		parse_map(t_map *map, char *path);
-int		read_map(t_map *map, char *path, t_list **lines);
-int		fill_map(t_map *map, t_list **lines);
+int		parse_map_lines(t_map *map, t_list **lines);
+int		parse_line(t_map *map, t_list *tmp, char *line);
+int		fill_map(t_map *map, t_list *lines);
 
 // PARSER 2
-t_list			*parse_line(t_map *map, const char *line);
-int				parse_vertex(char *s, unsigned long *vertex);
-int				get_map_width(char **arr);
-unsigned int	hextoui(char *s);
-void			cap_hex(char *s);
+int		count_vertices(char *line);
+void	set_color(t_vertex *vertex, char **line);
+void	destroy_map(t_map *map);
+void	do_nothing(void *ptr);
+
+// BRESENHAM
+void	plot_line(t_fdf *fdf, t_vertex v0, t_vertex v1);
+void	plot_line_low(t_fdf *fdf, t_vertex *v0, t_vertex *v1);
+void	plot_line_high(t_fdf *fdf, t_vertex *v0, t_vertex *v1);
+int		abso(int x);
+
+// TEST UTILS
+void	show_map(t_map *map);
+void	line_test(t_fdf *fdf);
 
 #endif

@@ -5,3 +5,4 @@
 - make something to simplify function calls (both their names and parameters)
 - logging system (embeded into struct or something)
 - map selector menu
+- rething s_nlgw to include the map and maybe call it something else
