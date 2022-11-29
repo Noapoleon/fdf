@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 19:39:05 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/11/29 18:31:32 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/11/29 20:59:16 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,17 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 
-// Window Settings
-#ifndef WIN_WIDTH
- #define WIN_WIDTH 800
-#endif
-#ifndef WIN_HEIGHT
- #define WIN_HEIGHT 800
-#endif
-#ifndef WIN_TITLE
- #define WIN_TITLE "File De Faire"
-#endif
+// FDF Options
+# define USAGE "Usage: %s <filename> [case_size z_size]\n"
+# ifndef WIN_WIDTH
+#  define WIN_WIDTH 800
+# endif
+# ifndef WIN_HEIGHT
+#  define WIN_HEIGHT 800
+# endif
+# ifndef WIN_TITLE
+#  define WIN_TITLE "File De Faire"
+# endif
 
 // Key IDs
 # define K_ESCAPE	0xff1b
@@ -61,6 +62,10 @@ struct s_map
 	int			fd;
 	int			width;
 	int			height;
+	int			cs;
+	int			zs;
+	int			xoff;
+	int			yoff;
 	t_vertex	**vs;
 };
 // OMFG IM SO FUCKING STUPID I FORGOT TO STORE THE X AND Y TOOO (maybe i don't need to actually, we'll see)
@@ -75,7 +80,9 @@ struct s_vertex
 
 // FDF UTILS
 void	fdf_setup(t_fdf *fdf, int ac, char **av, t_map *map);
-void	fdf_terminate(t_fdf *fdf);
+void	set_fdf_options(t_fdf *fdf, int ac, char **av);
+void	set_fdf_defaults(t_fdf *fdf);
+void	terminate_fdf(t_fdf *fdf);
 
 // HOOK UTILS
 int		set_hooks(t_fdf *fdf);
@@ -102,6 +109,8 @@ int		abso(int x);
 
 // TEST UTILS
 void	show_map(t_map *map);
+void	plot_neighbours(t_fdf *fdf, int x, int y);
+void	map_lines_test(t_fdf *fdf);
 void	line_test(t_fdf *fdf);
 
 #endif

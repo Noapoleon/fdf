@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 19:26:54 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/11/29 18:40:07 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/11/29 20:59:05 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	key_hook(int keycode, void *param)
 
 	if (keycode == K_ESCAPE)
 	{
-		fdf_terminate(fdf);
+		terminate_fdf(fdf);
 		exit(EXIT_SUCCESS);
 	}
 	return (0);

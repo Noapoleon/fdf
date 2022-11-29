@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:12:00 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/11/29 18:34:07 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/11/29 20:59:49 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	fdf_setup(t_fdf *fdf, int ac, char **av, t_map *map)
 {
 	if (ac != 2 && ac != 4)
 	{
-		ft_printf("Usage: %s <filename> [case_size z_size]\n", av[0]);
+		ft_printf(USAGE, av[0]);
 		exit(EXIT_FAILURE);
 	}
 	fdf->id = mlx_init();
@@ -28,12 +28,51 @@ void	fdf_setup(t_fdf *fdf, int ac, char **av, t_map *map)
 	if (fdf->win == NULL)
 		(perror("fdf_setup[win]"), exit(EXIT_FAILURE));
 	fdf->map = map;
-	fdf->width = WIN_WIDTH;
-	fdf->height = WIN_HEIGHT;
-	fdf->title = WIN_TITLE;
+	set_fdf_options(fdf, ac, av);
 }
 
-void	fdf_terminate(t_fdf *fdf)
+void set_fdf_options(t_fdf *fdf, int ac, char **av)
+{
+	set_fdf_defaults(fdf);
+	if (ac == 4)
+	{
+		fdf->map->cs = ft_atoi(av[2]);
+		fdf->map->zs = ft_atoi(av[3]);
+		if (fdf->map->cs == 0 || fdf->map->zs == 0)
+		{
+			fdf->map->cs = 20;
+			fdf->map->zs = 20;
+		}
+	}
+}
+
+void	set_fdf_defaults(t_fdf *fdf)
+{
+	fdf->map->cs = 20;
+	// IF DEFAULT CELL SIZE OF 20 WILL CLIP MAP ON THE Y AXIS IS NEEDS TO BE
+	// ADJUSTED (ACTUALLY MAYBE NOT SOME MAPS ARE CUT OFF ON THE FDF EXE FROM
+	// THE INTRA)
+	// IT LOOKS LIKE THE CS IS ALSO ADJUSTED BASED ON THE SIZE OF THE MAP
+	// ALSO THE BOTTOM CORNER LOOKS LIKE IT'S ALWAYS AT THE BOTTOM OF THE SCREEN
+	fdf->map->zs = 20;
+	fdf->map->xoff = fdf->width / 2 - fdf->map->width * fdf->map->cs / 2;
+	fdf->map->yoff = fdf->height / 2 - fdf->map->height * fdf->map->cs / 2;
+	fdf->width = WIN_WIDTH;
+	fdf->height = WIN_HEIGHT;
+	// OMFG THE WINDOW WIDTH AND SIZE ARE ALSO CHANGED BASED ON THE MAP UP
+	// TO A CERTAIN POINT
+	fdf->title = WIN_TITLE;
+
+
+	// event the intra's example fdf executable has weird behavior and window
+	// default sizing so let's establish some rules of our own
+	// - window width and size will be set so that it fits the model entirely
+	// - if the window resizing will be too big (define too big) for the screen
+	//   limit at an arbitrary resolution but still center the model
+}
+
+
+void	terminate_fdf(t_fdf *fdf)
 {
 	mlx_destroy_window(fdf->id, fdf->win);
 	destroy_map(fdf->map);
