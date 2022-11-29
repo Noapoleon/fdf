@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 19:39:05 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/11/28 21:56:03 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/11/29 18:31:32 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
  #define WIN_HEIGHT 800
 #endif
 #ifndef WIN_TITLE
- #define WIN_TITLE "Test window"
+ #define WIN_TITLE "File De Faire"
 #endif
 
 // Key IDs
@@ -44,22 +44,17 @@
 #define HEX_SET	"0123456789abcdef"
 
 typedef struct s_fdf	t_fdf;
-typedef struct s_window t_window;
 typedef struct s_map	t_map;
 typedef struct s_vertex	t_vertex;
 
 struct s_fdf
 {
-	void		*id;
-	t_window	*win;
-	t_map		*map;
-};
-struct s_window
-{
 	void	*id;
-	char	*title;
+	void	*win;
+	t_map	*map;
 	int		width;
 	int		height;
+	char	*title;
 };
 struct s_map
 {
@@ -79,8 +74,7 @@ struct s_vertex
 };
 
 // FDF UTILS
-void	fdf_setup(t_fdf *fdf, t_window *win, t_map *map);
-void	win_init(t_window *win, int width, int height, char *title);
+void	fdf_setup(t_fdf *fdf, int ac, char **av, t_map *map);
 void	fdf_terminate(t_fdf *fdf);
 
 // HOOK UTILS
@@ -89,6 +83,7 @@ int		key_hook(int keycode, void *param);
 
 // PARSER
 int		parse_map(t_map *map, char *path);
+int		open_map(t_map *map, char *path);
 int		parse_map_lines(t_map *map, t_list **lines);
 int		parse_line(t_map *map, t_list *tmp, char *line);
 int		fill_map(t_map *map, t_list *lines);

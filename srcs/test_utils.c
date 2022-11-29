@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 18:40:01 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/11/28 22:04:13 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/11/29 18:51:36 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,31 @@ void	show_map(t_map *map)
 		x = 0;
 		while (x < map->width)
 		{
-			ft_printf("%d,%#.2x ", map->vs[y][x].z, map->vs[y][x].c);
+			ft_printf("%d[%d;%d] ", map->vs[y][x].z, map->vs[y][x].x, map->vs[y][x].y);
 			++x;
 		}
+		ft_printf("\n");
 		++y;
 	}
 }
+
+//typedef struct s_matrix t_matrix;
+//struct s_matrix
+//{
+//	int	i;
+//	int j;
+//};
+
+//void	map_lines_test(t_fdf *fdf)
+//{
+////	const t_matrix iso = {
+//	const int[4] def = {1, 0, 1, 0};
+//	const int[4] iso = {1, -1, 1, 1};
+//	const t_map *map = fdf->map;
+//
+//	//show basic map
+//
+//}
 
 void	line_test(t_fdf *fdf)
 {
@@ -43,30 +62,30 @@ void	line_test(t_fdf *fdf)
 	while (v1.x < 600)
 	{
 		plot_line(fdf, v0, v1);
-		mlx_pixel_put(fdf->id, fdf->win->id, v1.x, v1.y, 0x0000ff00);
+		mlx_pixel_put(fdf->id, fdf->win, v1.x, v1.y, 0x0000ff00);
 		++(v1.x);
 //		usleep(1000);
 	}
 	while (v1.y < 600)
 	{
 		plot_line(fdf, v0, v1);
-		mlx_pixel_put(fdf->id, fdf->win->id, v1.x, v1.y, 0x0000ff00);
+		mlx_pixel_put(fdf->id, fdf->win, v1.x, v1.y, 0x0000ff00);
 		++(v1.y);
 //		usleep(1000);
 	}
 	while (v1.x > 200)
 	{
 		plot_line(fdf, v0, v1);
-		mlx_pixel_put(fdf->id, fdf->win->id, v1.x, v1.y, 0x0000ff00);
+		mlx_pixel_put(fdf->id, fdf->win, v1.x, v1.y, 0x0000ff00);
 		--(v1.x);
 //		usleep(1000);
 	}
 	while (v1.y > 200)
 	{
 		plot_line(fdf, v0, v1);
-		mlx_pixel_put(fdf->id, fdf->win->id, v1.x, v1.y, 0x0000ff00);
+		mlx_pixel_put(fdf->id, fdf->win, v1.x, v1.y, 0x0000ff00);
 		--(v1.y);
 //		usleep(1000);
 	}
-	mlx_pixel_put(fdf->id, fdf->win->id, v0.x, v0.y, 0x00ff0000);
+	mlx_pixel_put(fdf->id, fdf->win, v0.x, v0.y, 0x00ff0000);
 }

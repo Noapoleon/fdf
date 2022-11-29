@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 10:35:44 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/11/28 20:42:48 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/11/29 18:38:15 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,40 @@ int	parse_map(t_map *map, char *path)
 {
 	t_list	*lines;
 
-	map->fd = open(path, O_RDONLY);
-	if (map->fd == -1)
+	if (open_map(map, path) == -1)
 		return (ft_dprintf(2, "[ERROR] Failed to open map.\n"), -1);
 	lines = NULL;
 	if (parse_map_lines(map, &lines) == -1)
 	{
+		close(map->fd);
 		ft_dprintf(2, "[ERROR] Failed to read map.\n");
 		return (ft_lstclear(&lines, &free), -1);
 	}
 	if (fill_map(map, lines) == -1)
 	{
+		close(map->fd);
 		ft_lstclear(&lines, &free);
 		return (ft_dprintf(2, "[ERROR] Failed to fill map.\n"), -1);
 	}
+	close(map->fd);
 	ft_lstclear(&lines, do_nothing);
+	return (0);
+}
+
+// opens the map file while checking some prerequisites like if the path points
+// to an fdf map
+int	open_map(t_map *map, char *path)
+{
+	const size_t	path_len = ft_strlen(path);
+
+	if (path_len < 4 || ft_strnstr(path + path_len - 4, ".fdf", 4) == NULL)
+		return (ft_dprintf(2, "[ERROR] Path is not a .fdf map.\n"), -1);
+	map->fd = open(path, O_DIRECTORY);
+	if (map->fd > -1)
+		return (ft_dprintf(2, "[ERROR] Path leads to a directory.\n"), -1);
+	map->fd = open(path, O_RDONLY);
+	if (map->fd < 0)
+		return (ft_dprintf(2, "[ERROR] Invalid fd.\n"), -1);
 	return (0);
 }
 

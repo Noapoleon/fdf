@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 19:26:54 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/11/28 21:25:55 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/11/29 18:40:07 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int	set_hooks(t_fdf *fdf)
 {
-	mlx_key_hook(fdf->win->id, &key_hook, fdf);
+	mlx_key_hook(fdf->win, &key_hook, fdf);
 	return (0);
 }
 
