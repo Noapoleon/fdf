@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:12:00 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/11/29 20:59:49 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/11/30 01:00:39 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void set_fdf_options(t_fdf *fdf, int ac, char **av)
 	{
 		fdf->map->cs = ft_atoi(av[2]);
 		fdf->map->zs = ft_atoi(av[3]);
-		if (fdf->map->cs == 0 || fdf->map->zs == 0)
+		if (fdf->map->cs <= 0 || fdf->map->zs <= 0)
 		{
 			fdf->map->cs = 20;
 			fdf->map->zs = 20;
@@ -48,6 +48,8 @@ void set_fdf_options(t_fdf *fdf, int ac, char **av)
 
 void	set_fdf_defaults(t_fdf *fdf)
 {
+	fdf->width = WIN_WIDTH;
+	fdf->height = WIN_HEIGHT;
 	fdf->map->cs = 20;
 	// IF DEFAULT CELL SIZE OF 20 WILL CLIP MAP ON THE Y AXIS IS NEEDS TO BE
 	// ADJUSTED (ACTUALLY MAYBE NOT SOME MAPS ARE CUT OFF ON THE FDF EXE FROM
@@ -55,12 +57,16 @@ void	set_fdf_defaults(t_fdf *fdf)
 	// IT LOOKS LIKE THE CS IS ALSO ADJUSTED BASED ON THE SIZE OF THE MAP
 	// ALSO THE BOTTOM CORNER LOOKS LIKE IT'S ALWAYS AT THE BOTTOM OF THE SCREEN
 	fdf->map->zs = 20;
-	fdf->map->xoff = fdf->width / 2 - fdf->map->width * fdf->map->cs / 2;
-	fdf->map->yoff = fdf->height / 2 - fdf->map->height * fdf->map->cs / 2;
+	// -1 of some sort to be done here, if not is will be slightly off center
+	fdf->map->xoff = fdf->width / 2 - (fdf->map->width - 1) * fdf->map->cs / 2;
+	fdf->map->yoff = fdf->height / 2 - (fdf->map->height - 1) * fdf->map->cs / 2;
 	fdf->width = WIN_WIDTH;
 	fdf->height = WIN_HEIGHT;
 	// OMFG THE WINDOW WIDTH AND SIZE ARE ALSO CHANGED BASED ON THE MAP UP
 	// TO A CERTAIN POINT
+	// UPON FURTHER TESTING IT LOOKS LIKE THE WINDOW SIZE IS DETERMINED BY THE
+	// BY SIZE THE MAP WILL TAKE WITH ITS DEFAULT SETTINGS (which change
+	// depending on the map)
 	fdf->title = WIN_TITLE;
 
 

@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 18:45:57 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/11/29 20:58:28 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/11/30 00:32:35 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(int ac, char **av)
 	// TESTS //
 	//show_map(&map);
 	//line_test(&fdf);
-	//map_lines_test(&fdf);
+	map_lines_test(&fdf);
 	// ----- //
 
 	mlx_loop(fdf.id);
