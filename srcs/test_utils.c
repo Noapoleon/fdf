@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 18:40:01 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/11/30 22:55:36 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/11/30 23:43:47 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,7 @@ void	calc_coords(t_fdf *fdf)
 			fdf->vs[y][x].y = fdf->mtr[2] * tmp + fdf->mtr[3] * fdf->vs[y][x].y;
 			fdf->vs[y][x].y *= 0.5;
 			fdf->vs[y][x].x += WIN_WIDTH / 2;
-			//fdf->vs[y][x].y += WIN_HEIGHT / 2;
-			fdf->vs[y][x].y += WIN_HEIGHT / 2 - fdf->vs[y][x].z * fdf->csize;
+			fdf->vs[y][x].y += WIN_HEIGHT / 2 - fdf->vs[y][x].z * fdf->zsize;
 			++x;
 		}
 		++y;

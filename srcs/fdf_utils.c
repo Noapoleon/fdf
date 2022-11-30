@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:12:00 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/11/30 22:38:29 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/11/30 23:51:48 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,8 @@ void set_fdf_options(t_fdf *fdf, int ac, char **av)
 	{
 		fdf->csize = ft_atoi(av[2]);
 		fdf->zsize = ft_atoi(av[3]);
-		if (fdf->csize <= 0 || fdf->zsize <= 0)
-		{
-			fdf->csize = 20;
-			fdf->zsize = 20;
-		}
+		if (fdf->csize <= 0)
+			fdf->csize = WIN_WIDTH / fdf->mwidth;
 	}
 }
 
@@ -50,12 +47,14 @@ void	set_fdf_defaults(t_fdf *fdf)
 	fdf->wwidth = WIN_WIDTH;
 	fdf->wheight = WIN_HEIGHT;
 	fdf->csize = 20;
+	if (fdf->csize * fdf->mwidth > WIN_WIDTH)
+		fdf->csize = WIN_WIDTH / fdf->mwidth;
 	// IF DEFAULT CELL SIZE OF 20 WILL CLIP MAP ON THE Y AXIS IS NEEDS TO BE
 	// ADJUSTED (ACTUALLY MAYBE NOT SOME MAPS ARE CUT OFF ON THE FDF EXE FROM
 	// THE INTRA)
 	// IT LOOKS LIKE THE CS IS ALSO ADJUSTED BASED ON THE SIZE OF THE MAP
 	// ALSO THE BOTTOM CORNER LOOKS LIKE IT'S ALWAYS AT THE BOTTOM OF THE SCREEN
-	fdf->zsize = 20;
+	fdf->zsize = fdf->csize;
 	// -1 of some sort to be done here, if not is will be slightly off center
 	fdf->xoff = fdf->wwidth / 2 - (fdf->mwidth - 1) * fdf->csize / 2;
 	fdf->yoff = fdf->wheight / 2 - (fdf->mheight - 1) * fdf->csize / 2;

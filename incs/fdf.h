@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 19:39:05 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/11/30 22:10:36 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/11/30 23:49:09 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 // FDF Options
 # define USAGE "Usage: %s <filename> [case_size z_size]\n"
 # ifndef WIN_WIDTH
-#  define WIN_WIDTH 800
+#  define WIN_WIDTH 1000
 # endif
 # ifndef WIN_HEIGHT
 #  define WIN_HEIGHT 800
@@ -46,7 +46,6 @@
 #define HEX_SET	"0123456789abcdef"
 
 typedef struct s_fdf	t_fdf;
-typedef struct s_map	t_map;
 typedef struct s_vertex	t_vertex;
 
 struct s_fdf
