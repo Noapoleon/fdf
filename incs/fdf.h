@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 19:39:05 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/11/30 02:05:52 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/11/30 22:10:36 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <errno.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include <math.h>
 
 // FDF Options
 # define USAGE "Usage: %s <filename> [case_size z_size]\n"
@@ -50,29 +51,28 @@ typedef struct s_vertex	t_vertex;
 
 struct s_fdf
 {
-	void	*id;
-	void	*win;
-	t_map	*map;
-	int		width;
-	int		height;
-	char	*title;
-};
-// consider putting s_map fully into s_fdf
-struct s_map
-{
+	void		*id;
+	void		*win;
+	int			wwidth;
+	int			wheight;
+	char		*title;
+	t_vertex	**vs;
 	int			fd;
-	int			width;
-	int			height;
-	int			cs;
-	int			zs;
+	int			mwidth;
+	int			mheight;
+	int			csize;
+	int			zsize;
 	int			xoff;
 	int			yoff;
-	t_vertex	**vs;
+	double		mtr[4];
 };
 // OMFG IM SO FUCKING STUPID I FORGOT TO STORE THE X AND Y TOOO (maybe i don't need to actually, we'll see)
 // ALSO COLOR SHOULD BE STORED AS AN INT
 struct s_vertex
 {
+	// maybe store original screen coordinates somewhere here
+	// perhaps even in x and y directly as they can easily be recovered from
+	// iterating over the map again and aren't usually useful
 	int x;
 	int y;
 	int	z;
@@ -80,7 +80,7 @@ struct s_vertex
 };
 
 // FDF UTILS
-void	fdf_setup(t_fdf *fdf, int ac, char **av, t_map *map);
+void	fdf_setup(t_fdf *fdf, int ac, char **av);
 void	set_fdf_options(t_fdf *fdf, int ac, char **av);
 void	set_fdf_defaults(t_fdf *fdf);
 void	terminate_fdf(t_fdf *fdf);
@@ -90,16 +90,16 @@ int		set_hooks(t_fdf *fdf);
 int		key_hook(int keycode, void *param);
 
 // PARSER
-int		parse_map(t_map *map, char *path);
-int		open_map(t_map *map, char *path);
-int		parse_map_lines(t_map *map, t_list **lines);
-int		parse_line(t_map *map, t_list *tmp, char *line);
-int		fill_map(t_map *map, t_list *lines);
+int		parse_map(t_fdf *fdf, char *path);
+int		open_map(t_fdf *fdf, char *path);
+int		parse_map_lines(t_fdf *fdf, t_list **lines);
+int		parse_line(t_fdf *fdf, t_list *tmp, char *line);
+int		fill_map(t_fdf *fdf, t_list *lines);
 
 // PARSER 2
 int		count_vertices(char *line);
 void	set_color(t_vertex *vertex, char **line);
-void	destroy_map(t_map *map);
+void	destroy_map(t_fdf *fdf);
 void	do_nothing(void *ptr);
 
 // BRESENHAM
@@ -109,9 +109,9 @@ void	plot_line_high(t_fdf *fdf, t_vertex v0, t_vertex v1);
 int		abso(int a);
 
 // TEST UTILS
-void	show_map(t_map *map);
+void	show_map(t_fdf *fdf);
 void	plot_neighbours(t_fdf *fdf, int x, int y);
 void	map_lines_test(t_fdf *fdf);
-//void	line_test(t_fdf *fdf);
+void	line_test(t_fdf *fdf);
 
 #endif

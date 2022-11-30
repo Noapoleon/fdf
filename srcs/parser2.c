@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 01:56:49 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/11/28 20:36:28 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/11/30 22:51:19 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,14 @@ void	set_color(t_vertex *vertex, char **line)
 }
 
 // Frees the 2D array of the map struct
-void	destroy_map(t_map *map)
+void	destroy_map(t_fdf *fdf)
 {
 	int	y;
 
 	y = 0;
-	while (y < map->height)
-		free(map->vs[y++]);
-	free(map->vs);
+	while (y < fdf->mheight)
+		free(fdf->vs[y++]);
+	free(fdf->vs);
 }
 
 void	do_nothing(void *ptr)

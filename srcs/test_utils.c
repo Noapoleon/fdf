@@ -6,31 +6,49 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 18:40:01 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/11/30 02:01:20 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/11/30 22:55:36 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	show_map(t_map *map)
+void	show_map(t_fdf *fdf)
 {
 	int x;
 	int y;
 
 	y = 0;
-	ft_printf("map->width -----> %d\n", map->width);
-	ft_printf("map->height ----> %d\n", map->height);
-	ft_printf("map->cs --------> %d\n", map->cs);
-	ft_printf("map->zs --------> %d\n", map->zs);
-	while (y < map->height)
+	ft_printf("map->width -----> %d\n", fdf->mwidth);
+	ft_printf("map->height ----> %d\n", fdf->mheight);
+	ft_printf("map->cs --------> %d\n", fdf->csize);
+	ft_printf("map->zs --------> %d\n", fdf->zsize);
+	while (y < fdf->mheight)
 	{
 		x = 0;
-		while (x < map->width)
+		while (x < fdf->mwidth)
 		{
-			ft_printf("%d[%d;%d] ", map->vs[y][x].z, map->vs[y][x].x, map->vs[y][x].y);
+			ft_printf("%d[%d;%d] ", fdf->vs[y][x].z, fdf->vs[y][x].x, fdf->vs[y][x].y);
 			++x;
 		}
 		ft_printf("\n");
+		++y;
+	}
+}
+
+void	map_dots_test(t_fdf *fdf)
+{
+	int x;
+	int y;
+
+	y = 0;
+	while (y < fdf->mheight)
+	{
+		x = 0;
+		while (x < fdf->mwidth)
+		{
+			mlx_pixel_put(fdf->id, fdf->win, fdf->vs[y][x].x, fdf->vs[y][x].y, 0x00ff0000);
+			++x;
+		}
 		++y;
 	}
 }
@@ -44,36 +62,55 @@ void	show_map(t_map *map)
 
 void	plot_neighbours(t_fdf *fdf, int x, int y)
 {
-	// vector below (higher value but coords reversed)
-	t_vertex	v;
-	t_vertex	vr;
-	t_vertex	vd;
+	if (x != fdf->mwidth - 1)
+		plot_line(fdf, &fdf->vs[y][x], &fdf->vs[y][x + 1]);
+	if (y != fdf->mheight - 1)
+		plot_line(fdf, &fdf->vs[y][x], &fdf->vs[y + 1][x]);
+}
 
-	v.x = x * fdf->map->cs + fdf->map->xoff;
-	v.y = y * fdf->map->cs + fdf->map->yoff;
-	vr.x = v.x + fdf->map->cs;
-	vr.y = v.y;
-	vd.x = v.x;
-	vd.y = v.y + fdf->map->cs;
+void	calc_coords(t_fdf *fdf)
+{
+	int	x;
+	int	y;
+	int	tmp;
 
-	plot_line(fdf, &v, &vr);
-	plot_line(fdf, &v, &vd);
+	y = 0;
+	while (y < fdf->mheight)
+	{
+		x = 0;
+		while (x < fdf->mwidth)
+		{
+			fdf->vs[y][x].x = x * fdf->csize + fdf->xoff;
+			fdf->vs[y][x].y = y * fdf->csize + fdf->yoff;
+			fdf->vs[y][x].x -= WIN_WIDTH / 2;
+			fdf->vs[y][x].y -= WIN_HEIGHT / 2;
+			tmp = fdf->vs[y][x].x;
+			fdf->vs[y][x].x = fdf->mtr[0] * tmp + fdf->mtr[1] * fdf->vs[y][x].y;
+			fdf->vs[y][x].y = fdf->mtr[2] * tmp + fdf->mtr[3] * fdf->vs[y][x].y;
+			fdf->vs[y][x].y *= 0.5;
+			fdf->vs[y][x].x += WIN_WIDTH / 2;
+			//fdf->vs[y][x].y += WIN_HEIGHT / 2;
+			fdf->vs[y][x].y += WIN_HEIGHT / 2 - fdf->vs[y][x].z * fdf->csize;
+			++x;
+		}
+		++y;
+	}
 }
 
 void	map_lines_test(t_fdf *fdf)
 {
-//	const t_matrix iso = {
-//	const int	def[4]= {1, 0, 1, 0};
-//	const int	rot[4]= {1, -1, 1, 1};
-	int				x;
-	int				y;
+	int	x;
+	int	y;
+
+	calc_coords(fdf);
+//	map_dots_test(fdf);
 
 	//show basic map
 	y = 0;
-	while (y < fdf->map->height) // remove -1 later
+	while (y < fdf->mheight)
 	{
 		x = 0;
-		while (x < fdf->map->width) // remove -1 later
+		while (x < fdf->mwidth)
 		{
 			plot_neighbours(fdf, x, y);
 			++x;
@@ -86,6 +123,8 @@ void	line_test(t_fdf *fdf)
 {
 	// PROBABLY BROKE THIS TEST BY CHANGING v1 to &v1
 	// and the definition of plot_line arguments
+//	const int	def[4]= {1, 0, 1, 0};
+//	const int	rot[4]= {1, -1, 1, 1};
 	t_vertex v0;
 	t_vertex v1;
 

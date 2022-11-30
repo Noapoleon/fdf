@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 18:32:42 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/11/30 01:59:13 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/11/30 22:46:09 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ void	plot_line_low(t_fdf *fdf, t_vertex v0, t_vertex v1)
 	while (v0.x <= v1.x)
 	{
 		// PROTECT
-		mlx_pixel_put(fdf->id, fdf->win, v0.x, v0.y, 0x00ffffff);
+		mlx_pixel_put(fdf->id, fdf->win, v0.x, v0.y, v0.c); // change this line for color
+		// color can probably be done here
 		if (d > 0)
 		{
 			v0.y += yi;
@@ -66,7 +67,7 @@ void	plot_line_high(t_fdf *fdf, t_vertex v0, t_vertex v1)
 	while (v0.y <= v1.y)
 	{
 		// PROTECT
-		mlx_pixel_put(fdf->id, fdf->win, v0.x, v0.y, 0x00ffffff);
+		mlx_pixel_put(fdf->id, fdf->win, v0.x, v0.y, v0.c); // color like this doesn't work needs to be a gradient
 		if (d > 0)
 		{
 			v0.x += xi;
