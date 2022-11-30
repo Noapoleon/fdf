@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 18:40:01 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/11/30 00:47:56 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/11/30 02:01:20 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,20 @@ void	show_map(t_map *map)
 
 void	plot_neighbours(t_fdf *fdf, int x, int y)
 {
-	t_vertex	v1;
-	t_vertex	v2;
+	// vector below (higher value but coords reversed)
+	t_vertex	v;
+	t_vertex	vr;
+	t_vertex	vd;
 
-	(void)v2;
-	v1.x = x * fdf->map->cs + fdf->map->xoff;
-	v1.y = y * fdf->map->cs + fdf->map->yoff;
-//	v1.x = x * fdf->map->cs + fdf->width / 2;
-//	v1.y = y * fdf->map->cs + fdf->height / 2;
+	v.x = x * fdf->map->cs + fdf->map->xoff;
+	v.y = y * fdf->map->cs + fdf->map->yoff;
+	vr.x = v.x + fdf->map->cs;
+	vr.y = v.y;
+	vd.x = v.x;
+	vd.y = v.y + fdf->map->cs;
 
-	mlx_pixel_put(fdf->id, fdf->win, v1.x, v1.y, 0x00ffffff);
+	plot_line(fdf, &v, &vr);
+	plot_line(fdf, &v, &vd);
 }
 
 void	map_lines_test(t_fdf *fdf)
@@ -66,10 +70,10 @@ void	map_lines_test(t_fdf *fdf)
 
 	//show basic map
 	y = 0;
-	while (y < fdf->map->height)
+	while (y < fdf->map->height) // remove -1 later
 	{
 		x = 0;
-		while (x < fdf->map->width)
+		while (x < fdf->map->width) // remove -1 later
 		{
 			plot_neighbours(fdf, x, y);
 			++x;
@@ -80,6 +84,8 @@ void	map_lines_test(t_fdf *fdf)
 
 void	line_test(t_fdf *fdf)
 {
+	// PROBABLY BROKE THIS TEST BY CHANGING v1 to &v1
+	// and the definition of plot_line arguments
 	t_vertex v0;
 	t_vertex v1;
 
@@ -90,28 +96,28 @@ void	line_test(t_fdf *fdf)
 	v1.y = 200;
 	while (v1.x < 600)
 	{
-		plot_line(fdf, v0, v1);
+		plot_line(fdf, &v0, &v1);
 		mlx_pixel_put(fdf->id, fdf->win, v1.x, v1.y, 0x0000ff00);
 		++(v1.x);
 //		usleep(1000);
 	}
 	while (v1.y < 600)
 	{
-		plot_line(fdf, v0, v1);
+		plot_line(fdf, &v0, &v1);
 		mlx_pixel_put(fdf->id, fdf->win, v1.x, v1.y, 0x0000ff00);
 		++(v1.y);
 //		usleep(1000);
 	}
 	while (v1.x > 200)
 	{
-		plot_line(fdf, v0, v1);
+		plot_line(fdf, &v0, &v1);
 		mlx_pixel_put(fdf->id, fdf->win, v1.x, v1.y, 0x0000ff00);
 		--(v1.x);
 //		usleep(1000);
 	}
 	while (v1.y > 200)
 	{
-		plot_line(fdf, v0, v1);
+		plot_line(fdf, &v0, &v1);
 		mlx_pixel_put(fdf->id, fdf->win, v1.x, v1.y, 0x0000ff00);
 		--(v1.y);
 //		usleep(1000);

@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 19:39:05 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/11/29 20:59:16 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/11/30 02:05:52 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 #  define WIN_HEIGHT 800
 # endif
 # ifndef WIN_TITLE
-#  define WIN_TITLE "File De Faire"
+#  define WIN_TITLE "Feel D'Oeux Faire"
 # endif
 
 // Key IDs
@@ -57,6 +57,7 @@ struct s_fdf
 	int		height;
 	char	*title;
 };
+// consider putting s_map fully into s_fdf
 struct s_map
 {
 	int			fd;
@@ -102,15 +103,15 @@ void	destroy_map(t_map *map);
 void	do_nothing(void *ptr);
 
 // BRESENHAM
-void	plot_line(t_fdf *fdf, t_vertex v0, t_vertex v1);
-void	plot_line_low(t_fdf *fdf, t_vertex *v0, t_vertex *v1);
-void	plot_line_high(t_fdf *fdf, t_vertex *v0, t_vertex *v1);
-int		abso(int x);
+void	plot_line(t_fdf *fdf, t_vertex *v0, t_vertex *v1);
+void	plot_line_low(t_fdf *fdf, t_vertex v0, t_vertex v1);
+void	plot_line_high(t_fdf *fdf, t_vertex v0, t_vertex v1);
+int		abso(int a);
 
 // TEST UTILS
 void	show_map(t_map *map);
 void	plot_neighbours(t_fdf *fdf, int x, int y);
 void	map_lines_test(t_fdf *fdf);
-void	line_test(t_fdf *fdf);
+//void	line_test(t_fdf *fdf);
 
 #endif
