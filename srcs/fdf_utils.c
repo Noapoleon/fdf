@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:12:00 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/11/30 23:51:48 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/01 18:01:27 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@ void	fdf_setup(t_fdf *fdf, int ac, char **av)
 	if (fdf->win == NULL)
 		(perror("fdf_setup[win]"), exit(EXIT_FAILURE));
 	set_fdf_options(fdf, ac, av);
+	fdf->buf.img = mlx_new_image(fdf->id, fdf->wwidth, fdf->wheight);
+	fdf->buf.addr = mlx_get_data_addr(fdf->buf.img, &(fdf->buf.bpp),
+			&(fdf->buf.ll), &(fdf->buf.endian));
 }
 
 void set_fdf_options(t_fdf *fdf, int ac, char **av)
@@ -86,3 +89,11 @@ void	terminate_fdf(t_fdf *fdf)
 	mlx_destroy_window(fdf->id, fdf->win);
 	destroy_map(fdf);
 }
+
+int	abso(int a)
+{
+	if (a >= 0)
+		return (a);
+	return (-a);
+}
+

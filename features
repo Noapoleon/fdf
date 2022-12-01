@@ -8,3 +8,7 @@
 - rething s_nlgw to include the map and maybe call it something else
 - when doing colored lines. only do gradient computations if both sides or not
   the same color
+
+IMP:
+	- MAKEFILE doesn't work well. (obj dir non existant and fails to find clean rule or something)
+	- include minilibx sources and libft sources in repo without .git dir

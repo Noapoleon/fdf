@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 18:40:01 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/11/30 23:43:47 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/01 18:12:27 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,9 +129,11 @@ void	line_test(t_fdf *fdf)
 
 	v0.x = 400;
 	v0.y = 400;
+	v0.c = 0x00ffffff;
 	
 	v1.x = 200;
 	v1.y = 200;
+	v1.c = 0x00ff0000;
 	while (v1.x < 600)
 	{
 		plot_line(fdf, &v0, &v1);
@@ -161,4 +163,5 @@ void	line_test(t_fdf *fdf)
 //		usleep(1000);
 	}
 	mlx_pixel_put(fdf->id, fdf->win, v0.x, v0.y, 0x00ff0000);
+
 }
