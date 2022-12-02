@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 18:40:01 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/01 18:12:27 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/01 23:17:31 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,41 +127,41 @@ void	line_test(t_fdf *fdf)
 	t_vertex v0;
 	t_vertex v1;
 
-	v0.x = 400;
-	v0.y = 400;
+	v0.x = 600;
+	v0.y = 600;
 	v0.c = 0x00ffffff;
 	
-	v1.x = 200;
-	v1.y = 200;
+	v1.x = 0;
+	v1.y = 0;
 	v1.c = 0x00ff0000;
-	while (v1.x < 600)
+	while (v1.x < 1200)
 	{
 		plot_line(fdf, &v0, &v1);
-		mlx_pixel_put(fdf->id, fdf->win, v1.x, v1.y, 0x0000ff00);
+//		mlx_pixel_put(fdf->id, fdf->win, v1.x, v1.y, 0x0000ff00);
 		++(v1.x);
 //		usleep(1000);
 	}
-	while (v1.y < 600)
+	while (v1.y < 1200)
 	{
 		plot_line(fdf, &v0, &v1);
-		mlx_pixel_put(fdf->id, fdf->win, v1.x, v1.y, 0x0000ff00);
+//		mlx_pixel_put(fdf->id, fdf->win, v1.x, v1.y, 0x0000ff00);
 		++(v1.y);
 //		usleep(1000);
 	}
-	while (v1.x > 200)
+	while (v1.x > 0)
 	{
 		plot_line(fdf, &v0, &v1);
-		mlx_pixel_put(fdf->id, fdf->win, v1.x, v1.y, 0x0000ff00);
+//		mlx_pixel_put(fdf->id, fdf->win, v1.x, v1.y, 0x0000ff00);
 		--(v1.x);
 //		usleep(1000);
 	}
-	while (v1.y > 200)
+	while (v1.y > 0)
 	{
 		plot_line(fdf, &v0, &v1);
-		mlx_pixel_put(fdf->id, fdf->win, v1.x, v1.y, 0x0000ff00);
+//		mlx_pixel_put(fdf->id, fdf->win, v1.x, v1.y, 0x0000ff00);
 		--(v1.y);
 //		usleep(1000);
 	}
-	mlx_pixel_put(fdf->id, fdf->win, v0.x, v0.y, 0x00ff0000);
+//	mlx_pixel_put(fdf->id, fdf->win, v0.x, v0.y, 0x00ff0000);
 
 }

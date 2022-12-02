@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 19:39:05 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/01 18:00:46 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/01 21:52:10 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@
 // FDF Options
 # define USAGE "Usage: %s <filename> [case_size z_size]\n"
 # ifndef WIN_WIDTH
-#  define WIN_WIDTH 1000
+#  define WIN_WIDTH 1200
 # endif
 # ifndef WIN_HEIGHT
-#  define WIN_HEIGHT 800
+#  define WIN_HEIGHT 1200
 # endif
 # ifndef WIN_TITLE
 #  define WIN_TITLE "Feel D'Oeux Faire"
@@ -85,9 +85,9 @@ typedef struct s_fdf
 } t_fdf;
 typedef struct s_grad
 {
-	int rstep;
-	int gstep;
-	int bstep;
+	int	dc;
+	int	dp;
+	int	og_p;
 } t_grad;
 // OMFG IM SO FUCKING STUPID I FORGOT TO STORE THE X AND Y TOOO (maybe i don't need to actually, we'll see)
 // ALSO COLOR SHOULD BE STORED AS AN INT
@@ -120,9 +120,8 @@ void	do_nothing(void *ptr);
 void	plot_line(t_fdf *fdf, t_vertex *v0, t_vertex *v1);
 void	plot_line_low(t_fdf *fdf, t_vertex v0, t_vertex v1);
 void	plot_line_high(t_fdf *fdf, t_vertex v0, t_vertex v1);
-void	my_pixel_put(t_fdf *fdf, t_vertex *v);
-void	set_grad(t_grad *grad, t_vertex *v0, t_vertex *v1, int mode);
-void	set_grad_col(t_vertex *v, t_grad *grad);
+void	my_pixel_put(t_fdf *fdf, t_vertex *v, int col);
+int		grad_col(t_grad *grad, t_vertex *v, int pos);
 
 // TEST UTILS
 void	show_map(t_fdf *fdf);

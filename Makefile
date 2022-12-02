@@ -6,7 +6,7 @@
 #    By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/25 02:07:52 by nlegrand          #+#    #+#              #
-#    Updated: 2022/11/28 21:09:56 by nlegrand         ###   ########.fr        #
+#    Updated: 2022/12/01 19:45:10 by nlegrand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 
 all: ascii $(LIBDIR)/$(LIBFT).a $(LIBDIR)/libmlx.a $(NAME)
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJDIR) $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(INCFLAGS) $(LIBFLAGS) -o $(NAME)
 
 $(LIBDIR)/$(LIBFT).a:
@@ -54,6 +54,9 @@ $(LIBDIR)/$(LIBFT).a:
 $(LIBDIR)/libmlx.a:
 	make -C $(MINILIB)
 	cp $(MINILIB)/libmlx.a $(LIBDIR)/
+
+$(OBJDIR):
+	mkdir objs
 
 clean:
 	make clean -C $(LIBFT)
