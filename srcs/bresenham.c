@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 18:32:42 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/01 23:44:02 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/02 16:38:58 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	plot_line_low(t_fdf *fdf, t_vertex v0, t_vertex v1)
 	while (v0.x <= v1.x)
 	{
 		// PROTECT (from what lol ? i dont remember)
-		my_pixel_put(fdf, &v0, grad_col(&grad, &v0, v0.x));
+		my_pixel_put(fdf, &v0, grad_col(&grad, &v0, &v1, v0.x));
 		if (d > 0)
 		{
 			v0.y += yi;
@@ -73,7 +73,7 @@ void	plot_line_high(t_fdf *fdf, t_vertex v0, t_vertex v1)
 	grad.og_p = v0.y;
 	while (v0.y <= v1.y)
 	{
-		my_pixel_put(fdf, &v0, grad_col(&grad, &v0, v0.y));
+		my_pixel_put(fdf, &v0, grad_col(&grad, &v0, &v1, v0.y));
 		if (d > 0)
 		{
 			v0.x += xi;
@@ -96,25 +96,20 @@ void	my_pixel_put(t_fdf *fdf, t_vertex *v, int col)
 	}
 }
 
-int	grad_col(t_grad *grad, t_vertex *v, int pos)
+int	grad_col(t_grad *grad, t_vertex *v0, t_vertex *v1, int pos)
 {
-	int	r;
-	int	g;
-	int	b;
+	int				r;
+	int				g;
+	int				b;
 	int				col;
-	const double	factor = ((pos - grad->og_p) / (double)(grad->dp + 1));
+	const double	factor = (pos - grad->og_p) / (double)(grad->dp + 1);
 
-
-	r = (v->c & M_COLR) >> 16;
-	g = (v->c & M_COLG) >> 8;
-	b = (v->c & M_COLB);
-	r += ((grad->dc & M_COLR) >> 16) * factor;
-	g += ((grad->dc & M_COLG) >> 8) * factor;
-	b += (grad->dc & M_COLB) * factor;
+	r = (((v1->c & M_COLR) >> 16) - ((v0->c & M_COLR) >> 16)) * factor;
+	g = (((v1->c & M_COLG) >> 8) - ((v0->c & M_COLG) >> 8)) * factor;
+	b = ((v1->c & M_COLB) - (v0->c & M_COLB)) * factor;
 	col = 0;
-	col |= r << 16;
-	col |= g << 8;
-	col |= b;
-	col &= M_COL;
+	col |= ((r << 16) + (v0->c & M_COLR)) & M_COL;
+	col |= ((g << 8) + (v0->c & M_COLG)) & M_COL;
+	col |= (b + (v0->c & M_COLB)) & M_COL;
 	return (col);
 }

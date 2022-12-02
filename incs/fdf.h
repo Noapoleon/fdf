@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 19:39:05 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/01 21:52:10 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/02 16:03:55 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void	plot_line(t_fdf *fdf, t_vertex *v0, t_vertex *v1);
 void	plot_line_low(t_fdf *fdf, t_vertex v0, t_vertex v1);
 void	plot_line_high(t_fdf *fdf, t_vertex v0, t_vertex v1);
 void	my_pixel_put(t_fdf *fdf, t_vertex *v, int col);
-int		grad_col(t_grad *grad, t_vertex *v, int pos);
+int		grad_col(t_grad *grad, t_vertex *v0, t_vertex *v1, int pos);
 
 // TEST UTILS
 void	show_map(t_fdf *fdf);
