@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 18:45:57 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/02 16:40:51 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/02 22:24:57 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(int ac, char **av)
 	map_lines_test(&fdf);
 	// ----- //
 
-	mlx_put_image_to_window(fdf.id, fdf.win, fdf.buf.img, 0, 0);
+	//mlx_put_image_to_window(fdf.id, fdf.win, fdf.buf.img, 0, 0);
 	mlx_loop(fdf.id);
 	return (0);
 }

@@ -6,11 +6,13 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 18:40:01 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/02 16:40:34 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/02 22:02:28 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+# include <time.h>
 
 void	show_map(t_fdf *fdf)
 {
