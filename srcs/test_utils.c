@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 18:40:01 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/02 22:02:28 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/03 22:17:05 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,11 @@ void	calc_coords(t_fdf *fdf)
 			fdf->vs[y][x].x -= WIN_WIDTH / 2;
 			fdf->vs[y][x].y -= WIN_HEIGHT / 2;
 			tmp = fdf->vs[y][x].x;
-			fdf->vs[y][x].x = fdf->mtr[0] * tmp + fdf->mtr[1] * fdf->vs[y][x].y;
-			fdf->vs[y][x].y = fdf->mtr[2] * tmp + fdf->mtr[3] * fdf->vs[y][x].y;
-			fdf->vs[y][x].y *= 0.5;
-			fdf->vs[y][x].x += WIN_WIDTH / 2;
-			fdf->vs[y][x].y += WIN_HEIGHT / 2 - fdf->vs[y][x].z * fdf->zsize;
+			//fdf->vs[y][x].x = fdf->mtr[0] * tmp + fdf->mtr[1] * fdf->vs[y][x].y;
+			//fdf->vs[y][x].y = fdf->mtr[2] * tmp + fdf->mtr[3] * fdf->vs[y][x].y;
+			//fdf->vs[y][x].y *= 0.5;
+			//fdf->vs[y][x].x += WIN_WIDTH / 2;
+			//fdf->vs[y][x].y += WIN_HEIGHT / 2 - fdf->vs[y][x].z * fdf->zsize;
 			++x;
 		}
 		++y;
