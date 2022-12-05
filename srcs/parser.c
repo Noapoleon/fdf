@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/26 10:35:44 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/11/30 22:54:30 by nlegrand         ###   ########.fr       */
+/*   Created: 2022/12/05 18:13:50 by nlegrand          #+#    #+#             */
+/*   Updated: 2022/12/05 19:29:38 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,47 +16,48 @@
 int	parse_map(t_fdf *fdf, char *path)
 {
 	t_list	*lines;
+	int		fd;
 
-	if (open_map(fdf, path) == -1)
-		return (ft_dprintf(2, "[ERROR] Failed to open map.\n"), -1);
+	if (open_map(&fd, path) == -1)
+		return (ft_dprintf(2, MAP_FAIL_OPEN), -1);
 	lines = NULL;
-	if (parse_map_lines(fdf, &lines) == -1)
+	if (parse_map_lines(fdf, fd, &lines) == -1)
 	{
-		close(fdf->fd);
-		ft_dprintf(2, "[ERROR] Failed to read map.\n");
+		close(fd);
+		ft_dprintf(2, MAP_FAIL_READ);
 		return (ft_lstclear(&lines, &free), -1);
 	}
 	if (fill_map(fdf, lines) == -1)
 	{
-		close(fdf->fd);
+		close(fd);
 		ft_lstclear(&lines, &free);
-		return (ft_dprintf(2, "[ERROR] Failed to fill map.\n"), -1);
+		return (ft_dprintf(2, MAP_FAIL_FILL), -1);
 	}
-	close(fdf->fd);
+	close(fd);
 	ft_lstclear(&lines, do_nothing);
 	return (0);
 }
 
 // opens the map file while checking some prerequisites like if the path points
 // to an fdf map
-int	open_map(t_fdf *fdf, char *path)
+int	open_map(int *fd, char *path)
 {
 	const size_t	path_len = ft_strlen(path);
 
 	if (path_len < 4 || ft_strnstr(path + path_len - 4, ".fdf", 4) == NULL)
-		return (ft_dprintf(2, "[ERROR] Path is not a .fdf map.\n"), -1);
-	fdf->fd = open(path, O_DIRECTORY);
-	if (fdf->fd > -1)
-		return (ft_dprintf(2, "[ERROR] Path leads to a directory.\n"), -1);
-	fdf->fd = open(path, O_RDONLY);
-	if (fdf->fd < 0)
-		return (ft_dprintf(2, "[ERROR] Invalid fd.\n"), -1);
+		return (ft_dprintf(2, MAP_FAIL_FDF), -1);
+	*fd = open(path, O_DIRECTORY);
+	if (*fd > -1)
+		return (ft_dprintf(2, MAP_FAIL_DIR), -1);
+	*fd = open(path, O_RDONLY);
+	if (*fd < 0)
+		return (ft_dprintf(2, MAP_FAIL_FD), -1);
 	return (0);
 }
 
 // Reads the map line by line growing the chained list and calculates the map's
 // height.
-int	parse_map_lines(t_fdf *fdf, t_list **lines)
+int	parse_map_lines(t_fdf *fdf, int fd, t_list **lines)
 {
 	char	*line;
 	t_list	*tmp;
@@ -65,16 +66,15 @@ int	parse_map_lines(t_fdf *fdf, t_list **lines)
 	fdf->mheight = 0;
 	while (1)
 	{
-		line = get_next_line(fdf->fd);
+		line = get_next_line(fd);
 		if (line == NULL)
 			break ;
 		tmp = ft_lstnew(NULL);
 		if (tmp == NULL)
-			return (ft_dprintf(2, "[ERROR] Failed tmp malloc.\n")
-				, free(line), -1);
+			return (ft_dprintf(2, MAP_FAIL_TMP), free(line), -1);
 		if (parse_line(fdf, tmp, line) == -1)
-			return (ft_dprintf(2, "[ERROR] Failed to parse line #%d.\n"
-					, fdf->mheight + 1), free(line), free(tmp), -1);
+			return (ft_dprintf(2, MAP_FAIL_LINE, fdf->mheight + 1),
+					free(line), free(tmp), -1);
 		ft_lstadd_front(lines, tmp);
 		free(line);
 		++(fdf->mheight);
@@ -94,7 +94,7 @@ int	parse_line(t_fdf *fdf, t_list *tmp, char *line)
 		fdf->mwidth = count_vertices(line);
 	varr = malloc(sizeof(t_vertex) * fdf->mwidth);
 	if (varr == NULL)
-		return (ft_dprintf(2, "[ERROR] Failed to malloc vertex array."), -1);
+		return (ft_dprintf(2, MAP_FAIL_VERTEX), -1);
 	i = 0;
 	while (*line && *line != '\n')
 	{
@@ -118,14 +118,14 @@ int	fill_map(t_fdf *fdf, t_list *lines)
 	t_list	*curr;
 	int		height;
 
-	fdf->vs = malloc(sizeof(t_vertex *) * fdf->mheight);
-	if (fdf->vs == NULL)
-		return (ft_dprintf(2, "[ERROR] Failed to malloc fdf->vs.\n"), -1);
+	fdf->map = malloc(sizeof(t_vertex *) * fdf->mheight);
+	if (fdf->map == NULL)
+		return (ft_dprintf(2, MAP_FAIL_MAP), -1);
 	height = fdf->mheight;
 	curr = lines;
 	while (height--)
 	{
-		fdf->vs[height] = curr->content;
+		fdf->map[height] = curr->content;
 		curr = curr->next;
 	}
 	return (0);

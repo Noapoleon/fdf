@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/25 19:39:05 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/05 14:04:29 by nlegrand         ###   ########.fr       */
+/*   Created: 2022/12/05 14:44:31 by nlegrand          #+#    #+#             */
+/*   Updated: 2022/12/05 19:31:34 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,126 +15,104 @@
 
 # include "libft.h"
 # include "mlx.h"
-# include <stdio.h>
-# include <string.h>
 # include <stdlib.h>
+# include <stdio.h>
 # include <errno.h>
 # include <sys/stat.h>
 # include <fcntl.h>
-# include <math.h>
 
-// FDF Options
-# define USAGE "Usage: %s <filename> [case_size z_size]\n"
-# ifndef WIN_WIDTH
-#  define WIN_WIDTH 1200
-# endif
-# ifndef WIN_HEIGHT
-#  define WIN_HEIGHT 1200
-# endif
-# ifndef WIN_TITLE
-#  define WIN_TITLE "Feel D'Oeux Faire"
-# endif
+# define WIN_WIDTH	800
+# define WIN_HEIGHT	600
+# define WIN_TITLE	"fdf"
+# define HEX_SET	"0123456789abcdef"
+# define M_COL		0x00ffffff
+# define M_COLT		0xff000000
+# define M_COLR		0x00ff0000
+# define M_COLG		0x0000ff00
+# define M_COLB		0x000000ff
 
-// Key IDs
-# define K_ESCAPE	0xff1b
 
-// Vertex Bit Masks
-#define M_COL	0x00ffffff
-#define M_COLR	0x00ff0000
-#define M_COLG	0x0000ff00
-#define M_COLB	0x000000ff
-#define HEX_SET	"0123456789abcdef"
-#define LOW		0
-#define HIGH	1
+# define USAGE		"Usage: %s <filename> [case_size z_size]\n"
+# define MLX_ERROR	"[ERROR] Failed to establish connection to X server.\n"
+# define VIEW_ERROR	"[ERROR] Failed to set view properties.\n"
+# define WIN_ERROR	"[ERROR] Failed to create window.\n"
 
-typedef struct s_view
-{
-	int x;
-	int y;
-	int csize;
-	double zoom;
-}
+// Map Error Messages
+# define MAP_ERROR			"[ERROR] Failed to parse map.\n"
+# define MAP_FAIL_OPEN		"[ERROR] Failed to open map.\n"
+# define MAP_FAIL_READ		"[ERROR] Failed to read map.\n"
+# define MAP_FAIL_FILL		"[ERROR] Failed to fill map.\n"
+# define MAP_FAIL_FDF		"[ERROR] File is not a .fdf map.\n"
+# define MAP_FAIL_DIR		"[ERROR] Path leads to a directory.\n"
+# define MAP_FAIL_FD		"[ERROR] Invalid fd.\n"
+# define MAP_FAIL_TMP		"[ERROR] Failed tmp malloc.\n"
+# define MAP_FAIL_LINE		"[ERROR] Failed to parse line #%d.\n"
+# define MAP_FAIL_VERTEX	"[ERROR] Failed to malloc vertex array.\n"
+# define MAP_FAIL_MAP		"[ERROR] Faile to malloc map.\n"
 
-typedef struct s_imgbuf
+typedef struct s_fdf	t_fdf;
+typedef struct s_vertex	t_vertex;
+typedef struct s_view	t_view;
+typedef struct s_imgbuf	t_imgbuf;
+
+struct	s_imgbuf
 {
 	void	*img;
-	void	*addr;
+	char	*addr;
 	int		bpp;
 	int		ll;
 	int		endian;
-} t_imgbuf;
-typedef struct s_vertex
+};
+struct s_view
 {
-	// maybe store original screen coordinates somewhere here
-	// perhaps even in x and y directly as they can easily be recovered from
-	// iterating over the map again and aren't usually useful
-	int x;
-	int y;
+	double	x;
+	double	y;
+	double	z;
+	int		c_size;
+	int		z_size;
+	double	zoom;
+};
+struct	s_vertex
+{
+	int	x;
+	int	y;
 	int	z;
 	int	c;
-} t_vertex;
-typedef struct s_fdf
+};
+struct s_fdf
 {
-	void		*id;
+	void		*mlx;
 	void		*win;
+	t_vertex	**map;
+	t_view		view;
+	t_imgbuf	img;
+
+	char		*wtitle;
 	int			wwidth;
 	int			wheight;
-	t_imgbuf	buf;
-	char		*title;
-	t_vertex	**vs;
-	int			fd;
 	int			mwidth;
 	int			mheight;
-	int			csize;
-	int			zsize;
-	int			xoff;
-	int			yoff;
-	double		mtr[4];
-} t_fdf;
-typedef struct s_grad
-{
-	int	dc;
-	int	dp;
-	int	og_p;
-} t_grad;
-// OMFG IM SO FUCKING STUPID I FORGOT TO STORE THE X AND Y TOOO (maybe i don't need to actually, we'll see)
-// ALSO COLOR SHOULD BE STORED AS AN INT
+};
 
-// FDF UTILS
+// UTILS
 void	fdf_setup(t_fdf *fdf, int ac, char **av);
-void	set_fdf_options(t_fdf *fdf, int ac, char **av);
-void	set_fdf_defaults(t_fdf *fdf);
-void	terminate_fdf(t_fdf *fdf);
-int		abso(int a);
-
-// HOOK UTILS
-int		set_hooks(t_fdf *fdf);
-int		key_hook(int keycode, void *param);
+int		fdf_view_setup(t_fdf *fdf, int ac, char **av);
+int		fdf_win_setup(t_fdf* fdf);
+// UTILS 2
+void	fdf_zero_init(t_fdf *fdf);
+void	fdf_destroy_map(t_fdf *fdf);
+void	fdf_terminate(t_fdf *fdf);
+void	fdf_exit_failure(void);
+void	do_nothing(void *ptr);
 
 // PARSER
 int		parse_map(t_fdf *fdf, char *path);
-int		open_map(t_fdf *fdf, char *path);
-int		parse_map_lines(t_fdf *fdf, t_list **lines);
-int		parse_line(t_fdf *fdf, t_list *tmp, char *line);
+int		open_map(int *fd, char *path);
+int		parse_map_lines(t_fdf *fdf, int fd, t_list **lines);
+int 	parse_line(t_fdf *fdf, t_list *tmp, char *line);
 int		fill_map(t_fdf *fdf, t_list *lines);
-
 // PARSER 2
 int		count_vertices(char *line);
-void	set_color(t_vertex *vertex, char **line);
-void	destroy_map(t_fdf *fdf);
-void	do_nothing(void *ptr);
-
-// BRESENHAM
-void	plot_line(t_fdf *fdf, t_vertex *v0, t_vertex *v1);
-void	plot_line_low(t_fdf *fdf, t_vertex v0, t_vertex v1);
-void	plot_line_high(t_fdf *fdf, t_vertex v0, t_vertex v1);
-void	my_pixel_put(t_fdf *fdf, t_vertex *v, int col);
-int		grad_col(t_grad *grad, t_vertex *v0, t_vertex *v1, int pos);
-
-// TEST UTILS
-void	show_map(t_fdf *fdf);
-void	plot_neighbours(t_fdf *fdf, int x, int y);
-void	map_lines_test(t_fdf *fdf);
-void	line_test(t_fdf *fdf);
+void	set_color(t_vertex *vertex, char **lines);
 
 #endif

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/28 01:56:49 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/11/30 22:51:19 by nlegrand         ###   ########.fr       */
+/*   Created: 2022/12/05 18:31:36 by nlegrand          #+#    #+#             */
+/*   Updated: 2022/12/05 18:51:33 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,18 +48,3 @@ void	set_color(t_vertex *vertex, char **line)
 	*line = s;
 }
 
-// Frees the 2D array of the map struct
-void	destroy_map(t_fdf *fdf)
-{
-	int	y;
-
-	y = 0;
-	while (y < fdf->mheight)
-		free(fdf->vs[y++]);
-	free(fdf->vs);
-}
-
-void	do_nothing(void *ptr)
-{
-	(void)ptr;
-}

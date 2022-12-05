@@ -8,6 +8,7 @@
 - rething s_nlgw to include the map and maybe call it something else
 - when doing colored lines. only do gradient computations if both sides or not
   the same color
+- handle empty maps (THERE'S A LOT TO DO WITH THE PARSER AND FORMAT)
 
 IMP:
 	- MAKEFILE doesn't work well. (obj dir non existant and fails to find clean rule or something)
