@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 19:39:05 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/02 16:03:55 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/05 14:04:29 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,14 @@
 #define HEX_SET	"0123456789abcdef"
 #define LOW		0
 #define HIGH	1
+
+typedef struct s_view
+{
+	int x;
+	int y;
+	int csize;
+	double zoom;
+}
 
 typedef struct s_imgbuf
 {
