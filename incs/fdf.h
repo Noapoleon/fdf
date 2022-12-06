@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:44:31 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/06 16:03:16 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/06 23:10:04 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@
 # include <fcntl.h>
 # include <X11/X.h>
 # include <X11/keysym.h>
+# include <math.h>
 
-# define WIN_WIDTH	800
-# define WIN_HEIGHT	600
+# define WIN_MAX_WIDTH 1800
+# define WIN_MAX_HEIGHT 1000
 # define WIN_TITLE	"fdf"
 # define HEX_SET	"0123456789abcdef"
 # define M_COL		0x00ffffff
@@ -58,7 +59,15 @@ typedef struct s_vertex	t_vertex;
 typedef struct s_view	t_view;
 typedef struct s_imgbuf	t_imgbuf;
 typedef struct s_grad	t_grad;
+typedef struct s_coord	t_coord;
 
+struct s_coord
+{
+	int	xcenter;
+	int	ycenter;
+	int	xmap;
+	int	ymap;
+};
 struct	s_grad
 {
 	int	dc;
@@ -80,8 +89,8 @@ struct s_view
 	double	k[3];
 	int		xoff;
 	int		yoff;
-	int		c_size;
-	int		z_size;
+	int		cs;
+	int		zs;
 	double	zoom;
 };
 struct	s_vertex
@@ -108,9 +117,10 @@ struct s_fdf
 
 // SETUP
 void	fdf_setup(t_fdf *fdf, int ac, char **av);
-int		fdf_view_setup(t_fdf *fdf, int ac, char **av);
 int		fdf_win_setup(t_fdf *fdf);
+int		fdf_view_setup(t_fdf *fdf, int ac, char **av);
 int		fdf_img_setup(t_fdf *fdf);
+
 // UTILS
 void	fdf_zero_init(t_fdf *fdf);
 void	fdf_destroy_map(t_fdf *fdf);
@@ -121,6 +131,23 @@ void	do_nothing(void *ptr);
 void	set_vector_3d(double v[3], double x, double y, double z);
 int		abso(int a);
 
+// HOOKS
+void	set_hooks(t_fdf *fdf);
+int		close_esc(int keycode, t_fdf *fdf);
+int		close_cross(t_fdf *fdf);
+
+// PROJECT
+void	plot_map(t_fdf *fdf);
+void	calc_coords(t_fdf *fdf);
+void	calc_iso(t_fdf *fdf, t_vertex *v, t_coord *coord);
+
+// BRESENHAM
+void	plot_line(t_fdf *fdf, t_vertex *v0, t_vertex *v1);
+void	plot_line_low(t_fdf *fdf, t_vertex v0, t_vertex v1);
+void	plot_line_high(t_fdf *fdf, t_vertex v0, t_vertex v1);
+void	my_pixel_put(t_fdf *fdf, int x, int y, int col);
+int		grad_col(t_grad *grad, t_vertex *v0, t_vertex *v1, int pos);
+
 // PARSER
 int		parse_map(t_fdf *fdf, char *path);
 int		open_map(int *fd, char *path);
@@ -130,18 +157,6 @@ int		fill_map(t_fdf *fdf, t_list *lines);
 // PARSER 2
 int		count_vertices(char *line);
 void	set_color(t_vertex *vertex, char **lines);
-
-// HOOKS
-void	set_hooks(t_fdf *fdf);
-int		close_esc(int keycode, t_fdf *fdf);
-int		close_cross(t_fdf *fdf);
-
-// BRESENHAM
-void	plot_line(t_fdf *fdf, t_vertex *v0, t_vertex *v1);
-void	plot_line_low(t_fdf *fdf, t_vertex v0, t_vertex v1);
-void	plot_line_high(t_fdf *fdf, t_vertex v0, t_vertex v1);
-void	my_pixel_put(t_fdf *fdf, int x, int y, int col);
-int		grad_col(t_grad *grad, t_vertex *v0, t_vertex *v1, int pos);
 
 // TEST UTILS
 void	bres_grad_test(t_fdf *fdf);

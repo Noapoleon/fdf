@@ -14,10 +14,11 @@ SRCS	:=	fdf.c \
 			setup.c \
 			utils.c \
 			utils2.c \
+			hooks.c \
+			project.c \
+			bresenham.c \
 			parser.c \
 			parser2.c \
-			hooks.c \
-			bresenham.c \
 			test_utils.c
 OBJS	:=	$(SRCS:.c=.o)
 SRCS	:=	$(addprefix $(SRCDIR)/, $(SRCS))

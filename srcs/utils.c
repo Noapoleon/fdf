@@ -1,13 +1,12 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils2.c                                           :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nlegrand <nlegrand@stud.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/05 18:14:52 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/05 19:20:21 by nlegrand         ###   ########.fr       */
+/*   Created: 2022/12/06 21:54:41 by nlegrand          #+#    #+#             */
+/*   Updated: 2022/12/06 21:55:56 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +24,8 @@ void	fdf_zero_init(t_fdf *fdf)
 	set_vector_3d(fdf->view.k, 0.0, 0.0, 1.0);
 	fdf->view.xoff = 0;
 	fdf->view.yoff = 0;
-	fdf->view.c_size = 0;
-	fdf->view.z_size = 0;
+	fdf->view.cs = 0;
+	fdf->view.zs = 0;
 	fdf->view.zoom = 0.0;
 	fdf->img.img = NULL;
 	fdf->img.addr = NULL;

@@ -1,6 +1,6 @@
 - executable arguments that dont care about order
-- keybindings menu
-- projection type menu
+- keybindings menu (maybe allow changing the keybinding)
+- projection type menu (cycle with p)
 - state machine ? (not really)
 - make something to simplify function calls (both their names and parameters)
 - logging system (embeded into struct or something)

@@ -6,7 +6,7 @@
 /*   By: nlegrand <nlegrand@stud.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 21:50:38 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/06 15:57:17 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/06 16:43:23 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,19 @@ void	bres_grad_test(t_fdf *fdf)
 
 void	dot_test(t_fdf *fdf)
 {
-	int	y;
-	int	x;
+	int			y;
+	int			x;
+	t_vertex	**map;
 
+	map = fdf->map;
+	calc_coords(fdf);
 	y = 0;
 	while (y < fdf->mheight)
 	{
 		x = 0;
 		while (x < fdf->mwidth)
 		{
-			my_pixel_put(fdf, x, y, 0x00ffffff);
+			my_pixel_put(fdf, map[y][x].x, map[y][x].y, 0x00ffffff);
 			++x;
 		}
 		++y;

@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 18:13:50 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/06 00:11:48 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/06 22:46:19 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,8 @@ int	parse_line(t_fdf *fdf, t_list *tmp, char *line)
 		if (*line == ',')
 			set_color(varr + i, &line);
 		++i;
+		while (*line && *line == ' ')
+			++line;
 	}
 	tmp->content = varr;
 	return ((tmp->content = varr), 0);
