@@ -6,13 +6,13 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 18:13:50 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/05 19:29:38 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/06 00:11:48 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-// Reads the map and fills map struct with a 2D array.
+// Reads the map and fills map struct with a 2D array of t_vertex
 int	parse_map(t_fdf *fdf, char *path)
 {
 	t_list	*lines;
@@ -38,7 +38,7 @@ int	parse_map(t_fdf *fdf, char *path)
 	return (0);
 }
 
-// opens the map file while checking some prerequisites like if the path points
+// Opens the map file while checking some prerequisites like if the path points
 // to an fdf map
 int	open_map(int *fd, char *path)
 {
@@ -82,9 +82,10 @@ int	parse_map_lines(t_fdf *fdf, int fd, t_list **lines)
 	return (0);
 }
 
-// Parses each vertex from the split map line and sets the first line's number
-// of splits as the map's width. If subsequent map lines do not match this width
-// it will be considered as bad map formatting and parsing will stop here.
+// Parses each vertex from the map line and sets the first line's number
+// of vertices as the map's width.
+// If subsequent map lines do not match this width it will be considered as bad
+// map formatting and parsing will stop.
 int	parse_line(t_fdf *fdf, t_list *tmp, char *line)
 {
 	int			i;
@@ -112,7 +113,7 @@ int	parse_line(t_fdf *fdf, t_list *tmp, char *line)
 	return ((tmp->content = varr), 0);
 }
 
-// Creates the 2D array from the chained list.
+// Creates the 2D array from the chained list
 int	fill_map(t_fdf *fdf, t_list *lines)
 {
 	t_list	*curr;

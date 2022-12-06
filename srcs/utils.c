@@ -1,47 +1,79 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/05 14:52:46 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/05 19:17:36 by nlegrand         ###   ########.fr       */
+/*   Created: 2022/12/05 18:14:52 by nlegrand          #+#    #+#             */
+/*   Updated: 2022/12/05 19:20:21 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	fdf_setup(t_fdf *fdf, int ac, char **av)
+// Initializes every variable of the fdf struct to avoid freeing the an
+// uninitialized pointer with fdf_terminate
+void	fdf_zero_init(t_fdf *fdf)
 {
-	if (ac != 2 && ac != 4)
-		(ft_dprintf(2, USAGE, av[0]), exit(EXIT_FAILURE));
-	fdf_zero_init(fdf);
-	fdf->mlx = mlx_init();
-	if (fdf->mlx == NULL)
-		(ft_dprintf(2, MLX_ERROR), fdf_exit_failure());
-	if (parse_map(fdf, av[1]) == -1)
-		(fdf_terminate(fdf), ft_dprintf(2, MAP_ERROR), fdf_exit_failure());
-	if (fdf_view_setup(fdf, ac, av) == -1) // might not need a return value here or even an if
-		(fdf_terminate(fdf), ft_dprintf(2, VIEW_ERROR), fdf_exit_failure());
-	if (fdf_win_setup(fdf) == -1) // change stuff here for correct window size
-		(fdf_terminate(fdf), ft_dprintf(2, WIN_ERROR), fdf_exit_failure());
+	fdf->mlx = NULL;
+	fdf->win = NULL;
+	fdf->map = NULL;
+	set_vector_3d(fdf->view.i, 1.0, 0.0, 0.0);
+	set_vector_3d(fdf->view.j, 0.0, 1.0, 0.0);
+	set_vector_3d(fdf->view.k, 0.0, 0.0, 1.0);
+	fdf->view.xoff = 0;
+	fdf->view.yoff = 0;
+	fdf->view.c_size = 0;
+	fdf->view.z_size = 0;
+	fdf->view.zoom = 0.0;
+	fdf->img.img = NULL;
+	fdf->img.addr = NULL;
+	fdf->img.bpp = 0;
+	fdf->img.ll = 0;
+	fdf->img.endian = 0;
+	fdf->wtitle = NULL;
+	fdf->wwidth = 0;
+	fdf->wheight = 0;
+	fdf->mwidth = 0;
+	fdf->mheight = 0;
 }
 
-// DO LATER
-int	fdf_view_setup(t_fdf *fdf, int ac, char **av)
+// Frees the 2D array map
+void	fdf_destroy_map(t_fdf *fdf)
 {
-	(void)fdf;
-	(void)ac;
-	(void)av;
-	return (0);
+	int	y;
+
+	y = 0;
+	while (y < fdf->mheight)
+		free(fdf->map[y++]);
+	free(fdf->map);
 }
 
-// sets up the window size according the previously defined size to fit map
-int	fdf_win_setup(t_fdf *fdf)
+// Frees everything and destroys mlx stuff
+void	fdf_terminate(t_fdf *fdf)
 {
-	fdf->win = mlx_new_window(fdf->mlx, WIN_WIDTH, WIN_HEIGHT, WIN_TITLE); // CHANGE THIS to fit screen to map size (up to a maximum WIN_MAX_WIDTH)
-	if (fdf->win == NULL)
-		return (-1);
-	return (0);
+	if (fdf->img.img)
+		mlx_destroy_image(fdf->mlx, fdf->img.img);
+	if (fdf->win)
+		mlx_destroy_window(fdf->mlx, fdf->win);
+	if (fdf->mlx)
+		mlx_destroy_display(fdf->mlx);
+	if (fdf->map)
+		fdf_destroy_map(fdf);
+}
+
+// exits the program and printf and error context message
+void	fdf_exit_failure(void)
+{
+	perror("[EXIT] fdf_setup()");
+	exit(EXIT_FAILURE);
+}
+
+// does nothing :)
+// used with ft_lstclear so that it won't free the content
+void	do_nothing(void *ptr)
+{
+	(void)ptr;
 }

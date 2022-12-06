@@ -11,10 +11,14 @@ MLX		=	minilibx-linux
 
 # Files
 SRCS	:=	fdf.c \
+			setup.c \
 			utils.c \
 			utils2.c \
 			parser.c \
-			parser2.c
+			parser2.c \
+			hooks.c \
+			bresenham.c \
+			test_utils.c
 OBJS	:=	$(SRCS:.c=.o)
 SRCS	:=	$(addprefix $(SRCDIR)/, $(SRCS))
 OBJS	:=	$(addprefix $(OBJDIR)/, $(OBJS))
@@ -59,7 +63,7 @@ fclean: clean
 	$(RM) $(NAME)
 	
 
-re: fclean all
+re: fclean libft mlx all
 
 bonus: all
 

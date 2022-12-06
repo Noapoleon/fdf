@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:44:31 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/05 19:31:34 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/06 16:03:16 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <errno.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include <X11/X.h>
+# include <X11/keysym.h>
 
 # define WIN_WIDTH	800
 # define WIN_HEIGHT	600
@@ -34,11 +36,12 @@
 
 # define USAGE		"Usage: %s <filename> [case_size z_size]\n"
 # define MLX_ERROR	"[ERROR] Failed to establish connection to X server.\n"
+# define MAP_ERROR			"[ERROR] Failed to parse map.\n"
 # define VIEW_ERROR	"[ERROR] Failed to set view properties.\n"
-# define WIN_ERROR	"[ERROR] Failed to create window.\n"
+# define WIN_ERROR	"[ERROR] Failed to create mlx window.\n"
+# define IMG_ERROR	"[ERROR] Failed to craete mlx image.\n"
 
 // Map Error Messages
-# define MAP_ERROR			"[ERROR] Failed to parse map.\n"
 # define MAP_FAIL_OPEN		"[ERROR] Failed to open map.\n"
 # define MAP_FAIL_READ		"[ERROR] Failed to read map.\n"
 # define MAP_FAIL_FILL		"[ERROR] Failed to fill map.\n"
@@ -54,7 +57,14 @@ typedef struct s_fdf	t_fdf;
 typedef struct s_vertex	t_vertex;
 typedef struct s_view	t_view;
 typedef struct s_imgbuf	t_imgbuf;
+typedef struct s_grad	t_grad;
 
+struct	s_grad
+{
+	int	dc;
+	int	dp;
+	int	og_p;
+};
 struct	s_imgbuf
 {
 	void	*img;
@@ -65,9 +75,11 @@ struct	s_imgbuf
 };
 struct s_view
 {
-	double	x;
-	double	y;
-	double	z;
+	double	i[3];
+	double	j[3];
+	double	k[3];
+	int		xoff;
+	int		yoff;
 	int		c_size;
 	int		z_size;
 	double	zoom;
@@ -94,16 +106,20 @@ struct s_fdf
 	int			mheight;
 };
 
-// UTILS
+// SETUP
 void	fdf_setup(t_fdf *fdf, int ac, char **av);
 int		fdf_view_setup(t_fdf *fdf, int ac, char **av);
-int		fdf_win_setup(t_fdf* fdf);
-// UTILS 2
+int		fdf_win_setup(t_fdf *fdf);
+int		fdf_img_setup(t_fdf *fdf);
+// UTILS
 void	fdf_zero_init(t_fdf *fdf);
 void	fdf_destroy_map(t_fdf *fdf);
 void	fdf_terminate(t_fdf *fdf);
 void	fdf_exit_failure(void);
 void	do_nothing(void *ptr);
+// UTILS 2
+void	set_vector_3d(double v[3], double x, double y, double z);
+int		abso(int a);
 
 // PARSER
 int		parse_map(t_fdf *fdf, char *path);
@@ -114,5 +130,21 @@ int		fill_map(t_fdf *fdf, t_list *lines);
 // PARSER 2
 int		count_vertices(char *line);
 void	set_color(t_vertex *vertex, char **lines);
+
+// HOOKS
+void	set_hooks(t_fdf *fdf);
+int		close_esc(int keycode, t_fdf *fdf);
+int		close_cross(t_fdf *fdf);
+
+// BRESENHAM
+void	plot_line(t_fdf *fdf, t_vertex *v0, t_vertex *v1);
+void	plot_line_low(t_fdf *fdf, t_vertex v0, t_vertex v1);
+void	plot_line_high(t_fdf *fdf, t_vertex v0, t_vertex v1);
+void	my_pixel_put(t_fdf *fdf, int x, int y, int col);
+int		grad_col(t_grad *grad, t_vertex *v0, t_vertex *v1, int pos);
+
+// TEST UTILS
+void	bres_grad_test(t_fdf *fdf);
+void	dot_test(t_fdf *fdf);
 
 #endif
