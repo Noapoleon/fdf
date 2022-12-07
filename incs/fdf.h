@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:44:31 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/06 23:10:04 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/07 14:58:55 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ struct s_fdf
 	int			wheight;
 	int			mwidth;
 	int			mheight;
+	int			redraw;
 };
 
 // SETUP
@@ -122,7 +123,7 @@ int		fdf_view_setup(t_fdf *fdf, int ac, char **av);
 int		fdf_img_setup(t_fdf *fdf);
 
 // UTILS
-void	fdf_zero_init(t_fdf *fdf);
+void	fdf_vars_init(t_fdf *fdf);
 void	fdf_destroy_map(t_fdf *fdf);
 void	fdf_terminate(t_fdf *fdf);
 void	fdf_exit_failure(void);
@@ -130,11 +131,14 @@ void	do_nothing(void *ptr);
 // UTILS 2
 void	set_vector_3d(double v[3], double x, double y, double z);
 int		abso(int a);
+void	clear_img(t_fdf *fdf, int col);
 
 // HOOKS
 void	set_hooks(t_fdf *fdf);
 int		close_esc(int keycode, t_fdf *fdf);
 int		close_cross(t_fdf *fdf);
+int		zoom_map(int button, int x, int y, t_fdf *fdf);
+int		loop_hook(t_fdf *fdf);
 
 // PROJECT
 void	plot_map(t_fdf *fdf);

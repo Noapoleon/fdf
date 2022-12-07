@@ -6,7 +6,7 @@
 /*   By: nlegrand <nlegrand@stud.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 23:58:48 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/06 01:08:10 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/07 14:50:16 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,24 @@ int	abso(int a)
 	if (a < 0)
 		return (-a);
 	return (a);
+}
+
+void	clear_img(t_fdf *fdf, int col)
+{
+	int		x;
+	int		y;
+	char	*dst;
+
+	y = 0;
+	while (y < fdf->wheight)
+	{
+		x = 0;
+		while (x < fdf->wwidth)
+		{
+			dst = fdf->img.addr + y * fdf->img.ll + x * (fdf->img.bpp / 8);
+			*(unsigned int *)dst = col;
+			++x;
+		}
+		++y;
+	}
 }

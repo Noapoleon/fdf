@@ -6,7 +6,7 @@
 /*   By: nlegrand <nlegrand@stud.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 21:54:41 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/06 21:55:56 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/07 14:59:01 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // Initializes every variable of the fdf struct to avoid freeing the an
 // uninitialized pointer with fdf_terminate
-void	fdf_zero_init(t_fdf *fdf)
+void	fdf_vars_init(t_fdf *fdf)
 {
 	fdf->mlx = NULL;
 	fdf->win = NULL;
@@ -37,6 +37,7 @@ void	fdf_zero_init(t_fdf *fdf)
 	fdf->wheight = 0;
 	fdf->mwidth = 0;
 	fdf->mheight = 0;
+	fdf->redraw = -1;
 }
 
 // Frees the 2D array map
@@ -53,14 +54,17 @@ void	fdf_destroy_map(t_fdf *fdf)
 // Frees everything and destroys mlx stuff
 void	fdf_terminate(t_fdf *fdf)
 {
+	if (fdf->map)
+		fdf_destroy_map(fdf);
 	if (fdf->img.img)
 		mlx_destroy_image(fdf->mlx, fdf->img.img);
 	if (fdf->win)
 		mlx_destroy_window(fdf->mlx, fdf->win);
 	if (fdf->mlx)
+	{
 		mlx_destroy_display(fdf->mlx);
-	if (fdf->map)
-		fdf_destroy_map(fdf);
+		free(fdf->mlx);
+	}
 }
 
 // exits the program and printf and error context message

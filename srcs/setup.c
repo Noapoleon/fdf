@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:52:46 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/06 22:11:48 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/07 14:59:09 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	fdf_setup(t_fdf *fdf, int ac, char **av)
 {
 	if (ac != 2 && ac != 4)
 		(ft_dprintf(2, USAGE, av[0]), exit(EXIT_FAILURE));
-	fdf_zero_init(fdf);
+	fdf_vars_init(fdf);
 	fdf->mlx = mlx_init();
 	if (fdf->mlx == NULL)
 		(ft_dprintf(2, MLX_ERROR), fdf_exit_failure());
@@ -60,7 +60,10 @@ int	fdf_view_setup(t_fdf *fdf, int ac, char **av)
 	set_vector_3d(fdf->view.k, 0.0, 0.0, 1.0);
 	fdf->view.zoom = 1.0; // will be divided a lot when dezoomed so make sure to protect this
 	fdf->view.cs = 20;
-	fdf->view.zs = 1;
+	if (fdf->view.cs * fdf->mwidth > fdf->wwidth) // only resizes based on map width, need to do height too (or not)
+		fdf->view.cs = (fdf->wwidth * 0.8) / fdf->mwidth;
+	fdf->view.cs += (fdf->view.cs == 0);
+	fdf->view.zs = fdf->view.cs;
 	if (ac == 4)
 	{
 		fdf->view.cs = atoi(av[2]);
@@ -68,9 +71,6 @@ int	fdf_view_setup(t_fdf *fdf, int ac, char **av)
 		fdf->view.zs = atoi(av[3]);
 		fdf->view.zs += (fdf->view.zs  == 0);
 	}
-	if (fdf->view.cs * fdf->mwidth > fdf->wwidth) // only resizes based on map width, need to do height too (or not)
-		fdf->view.cs = (fdf->wwidth * 0.8) / fdf->mwidth;
-	fdf->view.cs += (fdf->view.cs == 0);
 	//// CORRECT THIS
 	fdf->view.xoff = fdf->wwidth / 2 - ((fdf->mwidth - 1) * fdf->view.cs) / 2; // does zoom have an impact here?
 	fdf->view.yoff = fdf->wheight / 2 - ((fdf->mheight - 1) * fdf->view.cs) / 2;
