@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:52:46 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/07 14:59:09 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/07 21:26:51 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,21 +59,19 @@ int	fdf_view_setup(t_fdf *fdf, int ac, char **av)
 	set_vector_3d(fdf->view.j, M_SQRT1_2, M_SQRT1_2, 0.0); // set_projection() or something
 	set_vector_3d(fdf->view.k, 0.0, 0.0, 1.0);
 	fdf->view.zoom = 1.0; // will be divided a lot when dezoomed so make sure to protect this
-	fdf->view.cs = 20;
-	if (fdf->view.cs * fdf->mwidth > fdf->wwidth) // only resizes based on map width, need to do height too (or not)
-		fdf->view.cs = (fdf->wwidth * 0.8) / fdf->mwidth;
-	fdf->view.cs += (fdf->view.cs == 0);
-	fdf->view.zs = fdf->view.cs;
+	fdf->view.cs_og = 20;
+	if (fdf->view.cs_og * fdf->mwidth > fdf->wwidth) // only resizes based on map width, need to do height too (or not)
+		fdf->view.cs_og = (fdf->wwidth * 0.8) / fdf->mwidth;
+	fdf->view.cs_og += (fdf->view.cs_og == 0);
+	fdf->view.zs_og = fdf->view.cs_og;
 	if (ac == 4)
 	{
-		fdf->view.cs = atoi(av[2]);
-		fdf->view.cs += (fdf->view.cs <= 0);
-		fdf->view.zs = atoi(av[3]);
-		fdf->view.zs += (fdf->view.zs  == 0);
+		fdf->view.cs_og = atoi(av[2]);
+		fdf->view.cs_og += (fdf->view.cs_og <= 0);
+		fdf->view.zs_og = atoi(av[3]);
+		fdf->view.zs_og += (fdf->view.zs_og == 0);
 	}
-	//// CORRECT THIS
-	fdf->view.xoff = fdf->wwidth / 2 - ((fdf->mwidth - 1) * fdf->view.cs) / 2; // does zoom have an impact here?
-	fdf->view.yoff = fdf->wheight / 2 - ((fdf->mheight - 1) * fdf->view.cs) / 2;
+	refresh_view_zoom(fdf);
 	return (0);
 }
 

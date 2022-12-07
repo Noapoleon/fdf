@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:44:31 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/07 16:06:18 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/07 22:48:35 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,21 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <X11/X.h>
-# include <X11/keysym.h>
 # include <math.h>
 
-# define WIN_MAX_WIDTH 1800
-# define WIN_MAX_HEIGHT 1000
-# define WIN_TITLE	"fdf"
-# define HEX_SET	"0123456789abcdef"
-# define M_COL		0x00ffffff
-# define M_COLT		0xff000000
-# define M_COLR		0x00ff0000
-# define M_COLG		0x0000ff00
-# define M_COLB		0x000000ff
+# define WIN_MAX_WIDTH	1800
+# define WIN_MAX_HEIGHT	1000
+# define WIN_TITLE		"fdf"
+# define HEX_SET		"0123456789abcdef"
+# define M_COL			0x00ffffff
+# define M_COLT			0xff000000
+# define M_COLR			0x00ff0000
+# define M_COLG			0x0000ff00
+# define M_COLB			0x000000ff
+
+# define KEY_G		103
+# define KEY_R		114
+# define KEY_ESC	65307
 
 
 # define USAGE		"Usage: %s <filename> [case_size z_size]\n"
@@ -61,15 +64,6 @@ typedef struct s_imgbuf	t_imgbuf;
 typedef struct s_grad	t_grad;
 typedef struct s_coord	t_coord;
 
-struct s_coord
-{
-	int	cs_zoom;
-	int	zs_zoom;
-	int	xcenter;
-	int	ycenter;
-	int	xmap;
-	int	ymap;
-};
 struct	s_grad
 {
 	int	dc;
@@ -91,8 +85,15 @@ struct s_view
 	double	k[3];
 	int		xoff;
 	int		yoff;
+	int		xmov;
+	int		ymov;
+	int		moving;
+	int		cs_og;
+	int		zs_og;
 	int		cs;
 	int		zs;
+	int		map_xcenter;
+	int		map_ycenter;
 	double	zoom;
 };
 struct	s_vertex
@@ -134,18 +135,21 @@ void	do_nothing(void *ptr);
 void	set_vector_3d(double v[3], double x, double y, double z);
 int		abso(int a);
 void	clear_img(t_fdf *fdf, int col);
+void	refresh_view_zoom(t_fdf *fdf);
 
 // HOOKS
 void	set_hooks(t_fdf *fdf);
-int		close_esc(int keycode, t_fdf *fdf);
+int		key_hook(int keycode, t_fdf *fdf);
 int		close_cross(t_fdf *fdf);
 int		zoom_map(int button, int x, int y, t_fdf *fdf);
 int		loop_hook(t_fdf *fdf);
+int		move_model(int x, int y, t_fdf *fdf);
 
 // PROJECT
 void	plot_map(t_fdf *fdf);
 void	calc_coords(t_fdf *fdf);
-void	calc_iso(t_fdf *fdf, t_vertex *v, t_coord *coord);
+void	calc_iso(t_fdf *fdf, t_vertex *v, int x, int y);
+int		check_out(t_fdf *fdf, t_vertex *v0, t_vertex *v1);
 
 // BRESENHAM
 void	plot_line(t_fdf *fdf, t_vertex *v0, t_vertex *v1);

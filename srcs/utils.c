@@ -6,7 +6,7 @@
 /*   By: nlegrand <nlegrand@stud.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 21:54:41 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/07 15:59:47 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/07 21:26:51 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,15 @@ void	fdf_vars_init(t_fdf *fdf)
 	set_vector_3d(fdf->view.k, 0.0, 0.0, 1.0);
 	fdf->view.xoff = 0;
 	fdf->view.yoff = 0;
+	fdf->view.xmov = 0;
+	fdf->view.ymov = 0;
+	fdf->view.moving = 0;
+	fdf->view.cs_og = 0;
+	fdf->view.zs_og = 0;
 	fdf->view.cs = 0;
 	fdf->view.zs = 0;
+	fdf->view.map_xcenter = 0;
+	fdf->view.map_ycenter = 0;
 	fdf->view.zoom = 1.0;
 	fdf->img.img = NULL;
 	fdf->img.addr = NULL;
@@ -37,7 +44,7 @@ void	fdf_vars_init(t_fdf *fdf)
 	fdf->wheight = 0;
 	fdf->mwidth = 0;
 	fdf->mheight = 0;
-	fdf->redraw = -1;
+	fdf->redraw = 1;
 }
 
 // Frees the 2D array map
