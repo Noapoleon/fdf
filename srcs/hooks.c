@@ -6,7 +6,7 @@
 /*   By: nlegrand <nlegrand@stud.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 22:09:46 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/07 14:58:15 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/07 15:54:41 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ int	zoom_map(int button, int x, int y, t_fdf *fdf)
 		fdf->view.zoom += 0.1;
 	if (button == 5)
 		fdf->view.zoom -= 0.1;
-	ft_printf("button -> %d\n", button);
-	printf("zoom ---> %f\n\n", fdf->view.zoom); // my ft_printf doesn't support floats
+	if (fdf->view.zoom < 0.0)
+		fdf->view.zoom = 0.0;
 	fdf->redraw = 1;
 	return (0);
 }
@@ -60,7 +60,6 @@ int	loop_hook(t_fdf *fdf)
 		clear_img(fdf, 0); // use unsigned int maybe??
 		plot_map(fdf);
 		mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img.img, 0, 0);
-		ft_printf("redrew!\n");
 	}
 	fdf->redraw = 0;
 	return (0);

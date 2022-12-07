@@ -6,7 +6,7 @@
 /*   By: nlegrand <nlegrand@stud.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 21:54:41 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/07 14:59:01 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/07 15:59:47 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	fdf_vars_init(t_fdf *fdf)
 	fdf->view.yoff = 0;
 	fdf->view.cs = 0;
 	fdf->view.zs = 0;
-	fdf->view.zoom = 0.0;
+	fdf->view.zoom = 1.0;
 	fdf->img.img = NULL;
 	fdf->img.addr = NULL;
 	fdf->img.bpp = 0;

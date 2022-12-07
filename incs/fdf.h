@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:44:31 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/07 14:58:55 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/07 16:06:18 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ typedef struct s_coord	t_coord;
 
 struct s_coord
 {
+	int	cs_zoom;
+	int	zs_zoom;
 	int	xcenter;
 	int	ycenter;
 	int	xmap;

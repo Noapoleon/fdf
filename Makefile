@@ -29,15 +29,13 @@ CC		=	cc
 CFLAGS	=	-Wall -Wextra -Werror
 LIBS	=	-L./$(LIBDIR) -lft -lmlx -lm -lX11 -lXext
 INCS	=	-I./$(INCDIR)
-
 DEBUG = -g3 -O0
 
 # Other
 RM	=	rm -rf
 
-# REMOVE G3 AFTERWARDS
 $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
-	$(CC) $(DEBUG) $(CFLAGS) $(INCS) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCS) -c $< -o $@
 
 all: $(NAME)
 
