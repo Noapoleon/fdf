@@ -15,6 +15,8 @@ SRCS	:=	fdf.c \
 			utils.c \
 			utils2.c \
 			hooks.c \
+			hooks2.c \
+			model_manip.c \
 			project.c \
 			bresenham.c \
 			parser.c \

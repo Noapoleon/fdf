@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:44:31 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/07 22:48:35 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/08 17:07:25 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,13 @@
 # define M_COLG			0x0000ff00
 # define M_COLB			0x000000ff
 
-# define KEY_G		103
-# define KEY_R		114
 # define KEY_ESC	65307
+
+# define MOUSE_LEFT 1
+# define MOUSE_RIGHT 3
+# define MOUSE_MIDDLE 2
+# define MOUSE_SCROLL_UP 4
+# define MOUSE_SCROLL_DOWN 5
 
 
 # define USAGE		"Usage: %s <filename> [case_size z_size]\n"
@@ -87,7 +91,10 @@ struct s_view
 	int		yoff;
 	int		xmov;
 	int		ymov;
-	int		moving;
+	int		move;
+	int		mov_start[2];
+	int		rotate;
+	int		rot_start[2];
 	int		cs_og;
 	int		zs_og;
 	int		cs;
@@ -127,23 +134,32 @@ int		fdf_img_setup(t_fdf *fdf);
 
 // UTILS
 void	fdf_vars_init(t_fdf *fdf);
+void	view_vars_init(t_view *view);
 void	fdf_destroy_map(t_fdf *fdf);
 void	fdf_terminate(t_fdf *fdf);
 void	fdf_exit_failure(void);
-void	do_nothing(void *ptr);
 // UTILS 2
 void	set_vector_3d(double v[3], double x, double y, double z);
 int		abso(int a);
 void	clear_img(t_fdf *fdf, int col);
 void	refresh_view_zoom(t_fdf *fdf);
+void	refresh_view_move(t_fdf *fdf);
+void	do_nothing(void *ptr);
 
 // HOOKS
 void	set_hooks(t_fdf *fdf);
-int		key_hook(int keycode, t_fdf *fdf);
-int		close_cross(t_fdf *fdf);
-int		zoom_map(int button, int x, int y, t_fdf *fdf);
-int		loop_hook(t_fdf *fdf);
-int		move_model(int x, int y, t_fdf *fdf);
+int		destroy_h(t_fdf *fdf);
+int		loop_h(t_fdf *fdf);
+// HOOKS 2
+int	key_press_h(int keycode, t_fdf *fdf);
+int	mouse_press_h(int button, int x, int y, t_fdf *fdf);
+int	mouse_release_h(int button, int x, int y, t_fdf *fdf);
+int	mouse_move_h(int x, int y, t_fdf *fdf);
+
+// MODEL MANIP
+void	model_zoom(t_fdf *fdf, int button);
+void	model_move(t_fdf *fdf, int x, int y);
+void	model_rotate(t_fdf *fdf, int x, int y);
 
 // PROJECT
 void	plot_map(t_fdf *fdf);

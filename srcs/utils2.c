@@ -6,7 +6,7 @@
 /*   By: nlegrand <nlegrand@stud.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 23:58:48 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/07 20:44:08 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/08 18:18:59 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,26 @@ void	clear_img(t_fdf *fdf, int col)
 	}
 }
 
+// Recalculates some view variables after performing a zoom
 void	refresh_view_zoom(t_fdf *fdf)
 {
 	fdf->view.cs = fdf->view.cs_og * fdf->view.zoom;
 	fdf->view.cs += (fdf->view.cs == 0);
-	fdf->view.zs = fdf->view.cs_og * fdf->view.zoom;
+	fdf->view.zs = fdf->view.zs_og * fdf->view.zoom;
 	fdf->view.zs += (fdf->view.cs == 0);
 	fdf->view.map_xcenter = fdf->mwidth * fdf->view.cs / 2.0;
 	fdf->view.map_ycenter = fdf->mheight * fdf->view.cs / 2.0;
+}
+// Recalculates some view variables after performing a move
+void	refresh_view_move(t_fdf *fdf)
+{
 	fdf->view.xoff = fdf->wwidth / 2 + fdf->view.xmov;
 	fdf->view.yoff = fdf->wheight / 2 + fdf->view.ymov;
+}
+
+// does nothing :)
+// used with ft_lstclear so that it won't free the content
+void	do_nothing(void *ptr)
+{
+	(void)ptr;
 }

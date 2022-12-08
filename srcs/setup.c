@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:52:46 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/07 21:26:51 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/08 18:22:53 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	fdf_view_setup(t_fdf *fdf, int ac, char **av)
 		fdf->view.zs_og += (fdf->view.zs_og == 0);
 	}
 	refresh_view_zoom(fdf);
+	refresh_view_move(fdf);
 	return (0);
 }
 
