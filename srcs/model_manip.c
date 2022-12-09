@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:52:05 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/08 17:32:40 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/09 14:55:38 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,16 @@ void	model_move(t_fdf *fdf, int x, int y)
 
 void	model_rotate(t_fdf *fdf, int x, int y)
 {
+	const double	*i = fdf->view.i;
+	const double	*j = fdf->view.j;
 	(void)fdf;
 	(void)x;
 	(void)y;
+	fdf->view.i[2] += M_PI_4/4;
+	fdf->view.j[2] += M_PI_4/4;
+	// refresh_rotate()
+	set_vector_3d(fdf->view.i, cos(i[2]), sin(i[2]), i[2]);
+	set_vector_3d(fdf->view.j, cos(j[2]), sin(j[2]), j[2]);
+	fdf->redraw = 1;
 	//fdf->view.
 }

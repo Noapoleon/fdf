@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:52:46 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/08 18:22:53 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/09 14:41:16 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,8 @@ int	fdf_view_setup(t_fdf *fdf, int ac, char **av)
 	// STATIC VALUES HERE, CHANGE LATER
 	// CHECK IF THERE'S A NEED TO RETURN -1
 
-	set_vector_3d(fdf->view.i, M_SQRT1_2, -M_SQRT1_2, 0.0); // Can probably do this in a subfunction that will also handle switching projection mode
-	set_vector_3d(fdf->view.j, M_SQRT1_2, M_SQRT1_2, 0.0); // set_projection() or something
-	set_vector_3d(fdf->view.k, 0.0, 0.0, 1.0);
+	set_vector_3d(fdf->view.i, cos(-M_PI_4), sin(-M_PI_4), -M_PI_4); // Can probably do this in a subfunction that will also handle switching projection mode set_vector_3d(fdf->view.j, M_SQRT1_2, M_SQRT1_2, 0.0); // set_projection() or something
+	set_vector_3d(fdf->view.j, cos(M_PI_4), sin(M_PI_4), M_PI_4);
 	fdf->view.zoom = 1.0; // will be divided a lot when dezoomed so make sure to protect this
 	fdf->view.cs_og = 20;
 	if (fdf->view.cs_og * fdf->mwidth > fdf->wwidth) // only resizes based on map width, need to do height too (or not)

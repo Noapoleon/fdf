@@ -6,7 +6,7 @@
 /*   By: nlegrand <nlegrand@stud.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 22:09:46 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/08 17:04:22 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/09 14:58:04 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 // Sets all x hooks through mlx functions
 void	set_hooks(t_fdf *fdf) // check if it  wouldn't be useful to return int
 {
-	mlx_key_hook(fdf->win, key_press_h, fdf);
+	//mlx_key_hook(fdf->win, key_press_h, fdf);
+	mlx_hook(fdf->win, KeyPress, KeyPressMask, key_press_h, fdf);
 	mlx_hook(fdf->win, DestroyNotify, StructureNotifyMask, destroy_h, fdf);
 	mlx_hook(fdf->win, ButtonPress, ButtonPressMask, mouse_press_h, fdf);
 	mlx_hook(fdf->win, ButtonRelease, ButtonReleaseMask, mouse_release_h, fdf);
