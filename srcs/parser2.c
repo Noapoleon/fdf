@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 18:31:36 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/06 00:13:14 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/09 15:44:16 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@ int	count_vertices(char *line)
 	while (*line && *line == ' ')
 		++line;
 	i = 0;
-	while (*line)
+	while (*line && *line != '\n')
 	{
+		while (*line && *line == ' ')
+			++line;
 		++i;
 		while (*line && *line != ' ')
 			++line;

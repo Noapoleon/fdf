@@ -6,7 +6,7 @@
 /*   By: nlegrand <nlegrand@stud.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 16:29:33 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/07 20:44:37 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/09 17:58:58 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,45 @@ void	plot_map(t_fdf *fdf)
 	int	y;
 
 	calc_coords(fdf);
-	y = 0;
-	while (y < fdf->mheight)
+	printf("fdf->view.i[2] = %lf and M_PI_2 = %lf\n", fdf->view.i[2], M_PI_2);
+	printf("equal? %d\n",  isgreaterequal(fdf->view.i[2], M_PI_2));
+	if (isgreaterequal(fdf->view.i[2], -M_PI_2) && isless(fdf->view.i[2], M_PI_2))
 	{
-		x = 0;
-		while (x < fdf->mwidth)
+		printf("haut\n");
+		y = 0;
+		while (y < fdf->mheight)
 		{
-			// dont process useless lines
-			if ((x != fdf->mwidth - 1) && check_out(fdf, &fdf->map[y][x],
-				&fdf->map[y][x + 1]) == 0)
-				plot_line(fdf, &fdf->map[y][x], &fdf->map[y][x + 1]);
-			if ((y != fdf->mheight - 1) && check_out(fdf, &fdf->map[y][x],
-				&fdf->map[y + 1][x]) == 0)
-				plot_line(fdf, &fdf->map[y][x], &fdf->map[y + 1][x]);
-			++x;
+			x = 0;
+			while (x < fdf->mwidth)
+			{
+				if ((x != fdf->mwidth - 1) && check_out(fdf, &fdf->map[y][x],
+					&fdf->map[y][x + 1]) == 0)
+					plot_line(fdf, &fdf->map[y][x], &fdf->map[y][x + 1]);
+				if ((y != fdf->mheight - 1) && check_out(fdf, &fdf->map[y][x],
+					&fdf->map[y + 1][x]) == 0)
+					plot_line(fdf, &fdf->map[y][x], &fdf->map[y + 1][x]);
+				++x;
+			}
+			++y;
 		}
-		++y;
+	}
+	else
+	{
+		printf("bas\n");
+		y = fdf->mheight;
+		while (y--)
+		{
+			x = fdf->mwidth;
+			while (x--)
+			{
+				if ((x != 0) && check_out(fdf, &fdf->map[y][x],
+					&fdf->map[y][x - 1]) == 0)
+					plot_line(fdf, &fdf->map[y][x], &fdf->map[y][x - 1]);
+				if ((y != 0) && check_out(fdf, &fdf->map[y][x],
+					&fdf->map[y - 1][x]) == 0)
+					plot_line(fdf, &fdf->map[y][x], &fdf->map[y - 1][x]);
+			}
+		}
 	}
 }
 
@@ -47,7 +70,7 @@ void	calc_coords(t_fdf *fdf) // for changing projection type maybe use this as f
 	{
 		x = 0;
 		while (x < fdf->mwidth)
-		{
+		 {
 			calc_iso(fdf, &fdf->map[y][x], x, y);
 			++x;
 		}
@@ -64,7 +87,8 @@ void	calc_iso(t_fdf *fdf, t_vertex *v, int x, int y)
 	tmp = v->x;
 	v->x = tmp * fdf->view.i[0] + v->y * fdf->view.j[0];
 	v->y = (tmp * fdf->view.i[1] + v->y * fdf->view.j[1]) * 0.5; // change that later for top view and stuff
-	v->y -= v->z * fdf->view.zs;
+	v->y -= v->z * fdf->view.zs * fdf->view.flat;
+//	printf("v->z -> %d and fdf->view.zs -> %d\n", v->z, fdf->view.zs);
 	v->x += fdf->view.xoff + fdf->view.xmov;
 	v->y += fdf->view.yoff + fdf->view.ymov;
 }

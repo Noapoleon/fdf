@@ -6,7 +6,7 @@
 /*   By: nlegrand <nlegrand@stud.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 21:54:41 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/09 14:43:42 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/09 16:31:14 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	view_vars_init(t_view *view)
 {
 	set_vector_3d(view->i, 0.0, 0.0, 0.0);
 	set_vector_3d(view->j, 0.0, 0.0, 0.0);
-	set_vector_3d(view->k, 0.0, 0.0, 0.0);
+//	set_vector_3d(view->k, 0.0, 0.0, 1.0);
 	view->xoff = 0;
 	view->yoff = 0;
 	view->xmov = 0;
@@ -57,6 +57,7 @@ void	view_vars_init(t_view *view)
 	view->map_xcenter = 0;
 	view->map_ycenter = 0;
 	view->zoom = 1.0;
+	view->flat = 1;
 }
 
 // Frees the 2D array map

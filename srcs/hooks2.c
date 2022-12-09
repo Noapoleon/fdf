@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 17:02:44 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/09 14:42:41 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/09 16:32:31 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@ int	key_press_h(int keycode, t_fdf *fdf)
 	}
 	if (keycode == 'r')
 		model_rotate(fdf, -1, -1);
+	if (keycode == 'f')
+	{
+		fdf->view.flat = (fdf->view.flat == 0);
+		fdf->redraw = 1;
+	}
 	return (0);
 }
 

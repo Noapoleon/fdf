@@ -37,12 +37,12 @@ DEBUG = -g3 -O0
 RM	=	rm -rf
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
-	$(CC) $(CFLAGS) $(INCS) -c $< -o $@
+	$(CC) $(DEBUG) $(CFLAGS) $(INCS) -c $< -o $@
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME)
+	$(CC) $(DEBUG) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME)
 
 $(OBJDIR):
 	mkdir -p $(OBJDIR)

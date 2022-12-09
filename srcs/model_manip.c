@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:52:05 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/09 14:55:38 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/09 17:48:22 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,11 @@ void	model_zoom(t_fdf *fdf, int button)
 		fdf->view.zoom *= 1.1;
 	else
 		fdf->view.zoom *= 0.9;
-	if (fdf->view.zoom < 0.0)
-		fdf->view.zoom = 0.0;
+	if (fdf->view.zoom < 0.001)
+		fdf->view.zoom = 0.001;
+	if (fdf->view.zoom > 10000.0)
+		fdf->view.zoom = 10000.0;
+	printf("zoom -> %lf\n", fdf->view.zoom);
 	refresh_view_zoom(fdf);
 	fdf->redraw = 1;
 }
@@ -38,14 +41,18 @@ void	model_rotate(t_fdf *fdf, int x, int y)
 {
 	const double	*i = fdf->view.i;
 	const double	*j = fdf->view.j;
+	//const double	*k = fdf->view.k;
 	(void)fdf;
 	(void)x;
 	(void)y;
-	fdf->view.i[2] += M_PI_4/4;
-	fdf->view.j[2] += M_PI_4/4;
+	fdf->view.i[2] += M_PI_4/4.0;
+	fdf->view.j[2] += M_PI_4/4.0;
+	if (isgreater(fdf->view.i[2], M_PI))
+		fdf->view.i[2] -= 2 * M_PI;
+	if (islessequal(fdf->view.i[2], -M_PI))
+		fdf->view.i[2] += 2 * M_PI;
 	// refresh_rotate()
 	set_vector_3d(fdf->view.i, cos(i[2]), sin(i[2]), i[2]);
 	set_vector_3d(fdf->view.j, cos(j[2]), sin(j[2]), j[2]);
 	fdf->redraw = 1;
-	//fdf->view.
 }

@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:44:31 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/08 17:07:25 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/09 16:28:31 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ struct s_view
 {
 	double	i[3];
 	double	j[3];
-	double	k[3];
+//	double	k[3];
 	int		xoff;
 	int		yoff;
 	int		xmov;
@@ -102,6 +102,7 @@ struct s_view
 	int		map_xcenter;
 	int		map_ycenter;
 	double	zoom;
+	int		flat;
 };
 struct	s_vertex
 {
