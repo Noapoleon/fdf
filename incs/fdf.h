@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:44:31 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/09 16:28:31 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/09 18:52:53 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ struct s_view
 	int		mov_start[2];
 	int		rotate;
 	int		rot_start[2];
+	int		ri;
 	int		cs_og;
 	int		zs_og;
 	int		cs;

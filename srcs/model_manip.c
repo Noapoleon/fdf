@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:52:05 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/09 17:48:22 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/10 01:35:14 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,17 @@ void	model_rotate(t_fdf *fdf, int x, int y)
 	(void)y;
 	fdf->view.i[2] += M_PI_4/4.0;
 	fdf->view.j[2] += M_PI_4/4.0;
-	if (isgreater(fdf->view.i[2], M_PI))
+	++fdf->view.ri;
+	if (fdf->view.ri > 16)
+	{
+		fdf->view.ri -= 32;
 		fdf->view.i[2] -= 2 * M_PI;
-	if (islessequal(fdf->view.i[2], -M_PI))
+	}
+	if (fdf->view.ri <= -16)
+	{
+		fdf->view.ri += 32;
 		fdf->view.i[2] += 2 * M_PI;
+	}
 	// refresh_rotate()
 	set_vector_3d(fdf->view.i, cos(i[2]), sin(i[2]), i[2]);
 	set_vector_3d(fdf->view.j, cos(j[2]), sin(j[2]), j[2]);

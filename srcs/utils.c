@@ -6,7 +6,7 @@
 /*   By: nlegrand <nlegrand@stud.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 21:54:41 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/09 16:31:14 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/10 01:42:26 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	view_vars_init(t_view *view)
 	view->rotate = 0;
 	view->rot_start[0] = 0;
 	view->rot_start[1] = 0;
+	view->ri = -4;
 	view->cs_og = 0;
 	view->zs_og = 0;
 	view->cs = 0;

@@ -6,7 +6,7 @@
 /*   By: nlegrand <nlegrand@stud.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 16:29:33 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/09 17:58:58 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/10 01:46:18 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,8 @@ void	plot_map(t_fdf *fdf)
 	int	y;
 
 	calc_coords(fdf);
-	printf("fdf->view.i[2] = %lf and M_PI_2 = %lf\n", fdf->view.i[2], M_PI_2);
-	printf("equal? %d\n",  isgreaterequal(fdf->view.i[2], M_PI_2));
-	if (isgreaterequal(fdf->view.i[2], -M_PI_2) && isless(fdf->view.i[2], M_PI_2))
+	if (fdf->view.ri > -8 && fdf->view.ri <= 8)
 	{
-		printf("haut\n");
 		y = 0;
 		while (y < fdf->mheight)
 		{
@@ -42,7 +39,8 @@ void	plot_map(t_fdf *fdf)
 	}
 	else
 	{
-		printf("bas\n");
+		printf("bas, ri = %d\n", fdf->view.ri);
+		printf("i[2] = %lf\n", fdf->view.i[2]);
 		y = fdf->mheight;
 		while (y--)
 		{
@@ -87,6 +85,7 @@ void	calc_iso(t_fdf *fdf, t_vertex *v, int x, int y)
 	tmp = v->x;
 	v->x = tmp * fdf->view.i[0] + v->y * fdf->view.j[0];
 	v->y = (tmp * fdf->view.i[1] + v->y * fdf->view.j[1]) * 0.5; // change that later for top view and stuff
+	//v->y = (tmp * fdf->view.i[1] + v->y * fdf->view.j[1]); // change that later for top view and stuff
 	v->y -= v->z * fdf->view.zs * fdf->view.flat;
 //	printf("v->z -> %d and fdf->view.zs -> %d\n", v->z, fdf->view.zs);
 	v->x += fdf->view.xoff + fdf->view.xmov;
