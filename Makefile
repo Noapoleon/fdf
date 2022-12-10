@@ -18,10 +18,10 @@ SRCS	:=	fdf.c \
 			hooks2.c \
 			model_manip.c \
 			project.c \
+			projections.c \
 			bresenham.c \
 			parser.c \
-			parser2.c \
-			test_utils.c
+			parser2.c
 OBJS	:=	$(SRCS:.c=.o)
 SRCS	:=	$(addprefix $(SRCDIR)/, $(SRCS))
 OBJS	:=	$(addprefix $(OBJDIR)/, $(OBJS))

@@ -6,7 +6,7 @@
 /*   By: nlegrand <nlegrand@stud.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 21:54:41 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/10 01:42:26 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/10 18:12:41 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 // uninitialized pointer with fdf_terminate
 void	fdf_vars_init(t_fdf *fdf)
 {
-	// NORM !!! view_start() or something
 	fdf->mlx = NULL;
 	fdf->win = NULL;
 	fdf->map = NULL;
@@ -37,6 +36,7 @@ void	fdf_vars_init(t_fdf *fdf)
 // Puts every variable in view struct to default value
 void	view_vars_init(t_view *view)
 {
+	view->calc_coords = &calc_iso_proj;
 	set_vector_3d(view->i, 0.0, 0.0, 0.0);
 	set_vector_3d(view->j, 0.0, 0.0, 0.0);
 //	set_vector_3d(view->k, 0.0, 0.0, 1.0);
@@ -50,15 +50,15 @@ void	view_vars_init(t_view *view)
 	view->rotate = 0;
 	view->rot_start[0] = 0;
 	view->rot_start[1] = 0;
-	view->ri = -4;
+	view->ri = 0;
 	view->cs_og = 0;
 	view->zs_og = 0;
 	view->cs = 0;
 	view->zs = 0;
 	view->map_xcenter = 0;
 	view->map_ycenter = 0;
-	view->zoom = 1.0;
-	view->flat = 1;
+	view->zoom = 0.0;
+	view->relief = 0;
 }
 
 // Frees the 2D array map

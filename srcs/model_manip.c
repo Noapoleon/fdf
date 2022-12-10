@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:52:05 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/10 02:38:48 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/10 18:21:50 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,14 @@ void	model_move(t_fdf *fdf, int x, int y)
 	fdf->redraw = 1;
 }
 
-void	model_rotate(t_fdf *fdf, int x, int y)
+void	model_rotate(t_fdf *fdf, int dir)
 {
 	const double	*i = fdf->view.i;
 	const double	*j = fdf->view.j;
 	//const double	*k = fdf->view.k;
-	(void)fdf;
-	(void)x;
-	(void)y;
-	fdf->view.i[2] += M_PI_4/4.0;
-	fdf->view.j[2] += M_PI_4/4.0;
-	++fdf->view.ri;
+	fdf->view.i[2] += (M_PI_4/4.0) * dir;
+	fdf->view.j[2] += (M_PI_4/4.0) * dir;
+	fdf->view.ri += dir;
 	if (fdf->view.ri > 16)
 	{
 		fdf->view.ri -= 32;
@@ -57,8 +54,22 @@ void	model_rotate(t_fdf *fdf, int x, int y)
 		fdf->view.ri += 32;
 		fdf->view.i[2] += 2 * M_PI;
 	}
-	// refresh_rotate()
 	set_vector_3d(fdf->view.i, cos(i[2]), sin(i[2]), i[2]);
 	set_vector_3d(fdf->view.j, cos(j[2]), sin(j[2]), j[2]);
+	fdf->redraw = 1;
+}
+
+void	model_flatten(t_fdf *fdf)
+{
+	fdf->view.relief = (fdf->view.relief == 0);
+	fdf->redraw = 1;
+}
+
+void	model_set_proj(t_fdf *fdf, int keycode)
+{
+	if (keycode == '1')
+		fdf->view.calc_coords = &calc_iso_proj;
+	else if (keycode == '2')
+		fdf->view.calc_coords = &calc_mili_proj;
 	fdf->redraw = 1;
 }

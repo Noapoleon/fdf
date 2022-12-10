@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:44:31 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/09 18:52:53 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/10 18:22:39 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ struct	s_imgbuf
 };
 struct s_view
 {
+	void	(*calc_coords)(t_fdf *fdf);
 	double	i[3];
 	double	j[3];
 //	double	k[3];
@@ -103,7 +104,7 @@ struct s_view
 	int		map_xcenter;
 	int		map_ycenter;
 	double	zoom;
-	int		flat;
+	int		relief;
 };
 struct	s_vertex
 {
@@ -161,13 +162,19 @@ int	mouse_move_h(int x, int y, t_fdf *fdf);
 // MODEL MANIP
 void	model_zoom(t_fdf *fdf, int button);
 void	model_move(t_fdf *fdf, int x, int y);
-void	model_rotate(t_fdf *fdf, int x, int y);
+void	model_rotate(t_fdf *fdf, int dir);
+void	model_flatten(t_fdf *fdf);
+void	model_set_proj(t_fdf *fdf, int keycode);
 
 // PROJECT
 void	plot_map(t_fdf *fdf);
-void	calc_coords(t_fdf *fdf);
-void	calc_iso(t_fdf *fdf, t_vertex *v, int x, int y);
+void	plot_up_left(t_fdf *fdf);
+void	plot_down_right(t_fdf *fdf);
 int		check_out(t_fdf *fdf, t_vertex *v0, t_vertex *v1);
+
+// PROJECTIONS
+void	calc_iso_proj(t_fdf *fdf);
+void	calc_mili_proj(t_fdf *fdf);
 
 // BRESENHAM
 void	plot_line(t_fdf *fdf, t_vertex *v0, t_vertex *v1);
