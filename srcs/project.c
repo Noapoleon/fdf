@@ -6,7 +6,7 @@
 /*   By: nlegrand <nlegrand@stud.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 16:29:33 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/10 01:46:18 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/10 02:38:55 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ void	plot_map(t_fdf *fdf)
 	}
 	else
 	{
-		printf("bas, ri = %d\n", fdf->view.ri);
-		printf("i[2] = %lf\n", fdf->view.i[2]);
 		y = fdf->mheight;
 		while (y--)
 		{

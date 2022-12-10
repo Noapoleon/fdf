@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:52:05 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/10 01:35:14 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/10 02:38:48 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	model_zoom(t_fdf *fdf, int button)
 		fdf->view.zoom = 0.001;
 	if (fdf->view.zoom > 10000.0)
 		fdf->view.zoom = 10000.0;
-	printf("zoom -> %lf\n", fdf->view.zoom);
 	refresh_view_zoom(fdf);
 	fdf->redraw = 1;
 }
