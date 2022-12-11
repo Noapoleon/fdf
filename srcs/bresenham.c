@@ -6,7 +6,7 @@
 /*   By: nlegrand <nlegrand@stud.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 00:37:53 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/06 15:59:06 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/11 01:35:50 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,15 @@ void	plot_line_low(t_fdf *fdf, t_vertex v0, t_vertex v1)
 	const int	dx = v1.x - v0.x;
 	const int	dy = (v1.y - v0.y) * (1 - ((v1.y - v0.y) < 0) * 2);
 	const int	yi = 1 - ((v1.y - v0.y) < 0) * 2;
-	int			d = 2 * dy - dx;
+	int			d;
 	t_grad		grad;
 
 	grad.dc = v1.c - v0.c;
 	grad.dp = dx;
 	grad.og_p = v0.x;
+	d = 2 * dy - dx;
 	while (v0.x <= v1.x)
 	{
-		// PROTECT (from what lol ? i dont remember)
 		my_pixel_put(fdf, v0.x, v0.y, grad_col(&grad, &v0, &v1, v0.x));
 		if (d > 0)
 		{
@@ -61,12 +61,13 @@ void	plot_line_high(t_fdf *fdf, t_vertex v0, t_vertex v1)
 	const int	dy = v1.y - v0.y;
 	const int	dx = (v1.x - v0.x) * (1 - ((v1.x - v0.x) < 0) * 2);
 	const int	xi = 1 - ((v1.x - v0.x) < 0) * 2;
-	int			d = 2 * dx - dy;
+	int			d;
 	t_grad		grad;
 
 	grad.dc = v1.c - v0.c;
 	grad.dp = dy;
 	grad.og_p = v0.y;
+	d = 2 * dx - dy;
 	while (v0.y <= v1.y)
 	{
 		my_pixel_put(fdf, v0.x, v0.y, grad_col(&grad, &v0, &v1, v0.y));

@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:44:31 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/10 18:22:39 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/11 01:42:24 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@
 # define MOUSE_MIDDLE 2
 # define MOUSE_SCROLL_UP 4
 # define MOUSE_SCROLL_DOWN 5
-
 
 # define USAGE		"Usage: %s <filename> [case_size z_size]\n"
 # define MLX_ERROR	"[ERROR] Failed to establish connection to X server.\n"
@@ -87,7 +86,6 @@ struct s_view
 	void	(*calc_coords)(t_fdf *fdf);
 	double	i[3];
 	double	j[3];
-//	double	k[3];
 	int		xoff;
 	int		yoff;
 	int		xmov;
@@ -147,6 +145,7 @@ int		abso(int a);
 void	clear_img(t_fdf *fdf, int col);
 void	refresh_view_zoom(t_fdf *fdf);
 void	refresh_view_move(t_fdf *fdf);
+// UTILS 3
 void	do_nothing(void *ptr);
 
 // HOOKS
@@ -154,10 +153,10 @@ void	set_hooks(t_fdf *fdf);
 int		destroy_h(t_fdf *fdf);
 int		loop_h(t_fdf *fdf);
 // HOOKS 2
-int	key_press_h(int keycode, t_fdf *fdf);
-int	mouse_press_h(int button, int x, int y, t_fdf *fdf);
-int	mouse_release_h(int button, int x, int y, t_fdf *fdf);
-int	mouse_move_h(int x, int y, t_fdf *fdf);
+int		key_press_h(int keycode, t_fdf *fdf);
+int		mouse_press_h(int button, int x, int y, t_fdf *fdf);
+int		mouse_release_h(int button, int x, int y, t_fdf *fdf);
+int		mouse_move_h(int x, int y, t_fdf *fdf);
 
 // MODEL MANIP
 void	model_zoom(t_fdf *fdf, int button);
@@ -187,7 +186,7 @@ int		grad_col(t_grad *grad, t_vertex *v0, t_vertex *v1, int pos);
 int		parse_map(t_fdf *fdf, char *path);
 int		open_map(int *fd, char *path);
 int		parse_map_lines(t_fdf *fdf, int fd, t_list **lines);
-int 	parse_line(t_fdf *fdf, t_list *tmp, char *line);
+int		parse_line(t_fdf *fdf, t_list *tmp, char *line);
 int		fill_map(t_fdf *fdf, t_list *lines);
 // PARSER 2
 int		count_vertices(char *line);

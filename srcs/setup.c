@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:52:46 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/10 17:17:01 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/11 01:28:08 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	fdf_setup(t_fdf *fdf, int ac, char **av)
 // Sets up the window size according the previously defined size to fit map
 int	fdf_win_setup(t_fdf *fdf)
 {
-	// PROTECT FOR BAD RESOLUTIONS FOR DEFENSE (might already be protected by mlx_new_window but need to check)
 	mlx_get_screen_size(fdf->mlx, &fdf->wwidth, &fdf->wheight);
 	fdf->wwidth -= 50;
 	fdf->wheight -= 50;
@@ -42,7 +41,6 @@ int	fdf_win_setup(t_fdf *fdf)
 		fdf->wwidth = WIN_MAX_WIDTH;
 	if (fdf->wheight > WIN_MAX_HEIGHT)
 		fdf->wheight = WIN_MAX_HEIGHT;
-	// CHANGE THIS WHEN VIEW_SETUP IS DONE
 	fdf->win = mlx_new_window(fdf->mlx, fdf->wwidth, fdf->wheight, WIN_TITLE);
 	if (fdf->win == NULL)
 		return (-1);
@@ -52,16 +50,13 @@ int	fdf_win_setup(t_fdf *fdf)
 // Sets the view struct for matrix multiplication later
 int	fdf_view_setup(t_fdf *fdf, int ac, char **av)
 {
-	// STATIC VALUES HERE, CHANGE LATER
-	// CHECK IF THERE'S A NEED TO RETURN -1
-
-	set_vector_3d(fdf->view.i, cos(-M_PI_4), sin(-M_PI_4), -M_PI_4); // Can probably do this in a subfunction that will also handle switching projection mode set_vector_3d(fdf->view.j, M_SQRT1_2, M_SQRT1_2, 0.0); // set_projection() or something
+	set_vector_3d(fdf->view.i, cos(-M_PI_4), sin(-M_PI_4), -M_PI_4);
 	set_vector_3d(fdf->view.j, cos(M_PI_4), sin(M_PI_4), M_PI_4);
 	fdf->view.ri = -4;
 	fdf->view.relief = 1;
-	fdf->view.zoom = 1.0; // will be divided a lot when dezoomed so make sure to protect this
+	fdf->view.zoom = 1.0;
 	fdf->view.cs_og = 20;
-	if (fdf->view.cs_og * fdf->mwidth > fdf->wwidth) // only resizes based on map width, need to do height too (or not)
+	if (fdf->view.cs_og * fdf->mwidth > fdf->wwidth)
 		fdf->view.cs_og = (fdf->wwidth * 0.8) / fdf->mwidth;
 	fdf->view.cs_og += (fdf->view.cs_og == 0);
 	fdf->view.zs_og = fdf->view.cs_og;
@@ -79,7 +74,6 @@ int	fdf_view_setup(t_fdf *fdf, int ac, char **av)
 
 int	fdf_img_setup(t_fdf *fdf)
 {
-	// CHANGE IMAGE RESOLUTION TO DYNAMIC STUFF
 	fdf->img.img = mlx_new_image(fdf->mlx, fdf->wwidth, fdf->wheight);
 	if (fdf->img.img == NULL)
 		return (-1);

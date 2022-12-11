@@ -6,7 +6,7 @@
 /*   By: nlegrand <nlegrand@stud.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 16:29:33 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/10 18:15:03 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/11 01:35:33 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	plot_map(t_fdf *fdf)
 {
-
 	(fdf->view.calc_coords)(fdf);
 	if (fdf->view.ri > -8 && fdf->view.ri <= 8)
 		plot_up_left(fdf);
@@ -66,35 +65,15 @@ void	plot_down_right(t_fdf *fdf)
 	}
 }
 
-// Performs coordinatas calculation for each point in the map according to the
-// projection type
-//void	calc_coords(t_fdf *fdf) // for changing projection type maybe use this as function pointer like calc_coords_iso or something
-//{
-//	int	x;
-//	int	y;
-//
-//	y = 0;
-//	while (y < fdf->mheight)
-//	{
-//		x = 0;
-//		while (x < fdf->mwidth)
-//		{
-//			calc_iso(fdf, &fdf->map[y][x], x, y);
-//			++x;
-//		}
-//		++y;
-//	}
-//}
-
 // Prevents drawing lines outside of the window completely
 // (not all cases covered)
 int	check_out(t_fdf *fdf, t_vertex *v0, t_vertex *v1)
 {
-	if ((v0->x < 0 && v1->x < 0) ||
-			(v0->x >= fdf->wwidth && v1->x >= fdf->wwidth))
+	if ((v0->x < 0 && v1->x < 0)
+		|| (v0->x >= fdf->wwidth && v1->x >= fdf->wwidth))
 		return (1);
-	if ((v0->y < 0 && v1->y < 0) ||
-			(v0->y >= fdf->wheight && v1->y >= fdf->wheight))
+	if ((v0->y < 0 && v1->y < 0)
+		|| (v0->y >= fdf->wheight && v1->y >= fdf->wheight))
 		return (1);
 	return (0);
 }

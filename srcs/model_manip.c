@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:52:05 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/10 18:21:50 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/11 01:36:46 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ void	model_rotate(t_fdf *fdf, int dir)
 {
 	const double	*i = fdf->view.i;
 	const double	*j = fdf->view.j;
-	//const double	*k = fdf->view.k;
-	fdf->view.i[2] += (M_PI_4/4.0) * dir;
-	fdf->view.j[2] += (M_PI_4/4.0) * dir;
+
+	fdf->view.i[2] += (M_PI_4 / 4.0) * dir;
+	fdf->view.j[2] += (M_PI_4 / 4.0) * dir;
 	fdf->view.ri += dir;
 	if (fdf->view.ri > 16)
 	{

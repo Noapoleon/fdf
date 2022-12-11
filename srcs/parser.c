@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 18:13:50 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/06 22:46:19 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/11 01:32:56 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	parse_map_lines(t_fdf *fdf, int fd, t_list **lines)
 			return (ft_dprintf(2, MAP_FAIL_TMP), free(line), -1);
 		if (parse_line(fdf, tmp, line) == -1)
 			return (ft_dprintf(2, MAP_FAIL_LINE, fdf->mheight + 1),
-					free(line), free(tmp), -1);
+				free(line), free(tmp), -1);
 		ft_lstadd_front(lines, tmp);
 		free(line);
 		++(fdf->mheight);

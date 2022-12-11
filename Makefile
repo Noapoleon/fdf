@@ -14,6 +14,7 @@ SRCS	:=	fdf.c \
 			setup.c \
 			utils.c \
 			utils2.c \
+			utils3.c \
 			hooks.c \
 			hooks2.c \
 			model_manip.c \
