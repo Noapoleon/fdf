@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:52:05 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/11 04:03:08 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/11 07:31:31 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,23 @@
 void	model_zoom(t_fdf *fdf, int button)
 {
 	if (button == MOUSE_SCROLL_UP)
+	{
 		fdf->view.zoom *= 1.1;
+		fdf->view.xmov *= 1.1;
+		fdf->view.ymov *= 1.1;
+	}
 	else
+	{
 		fdf->view.zoom *= 0.9;
+		fdf->view.xmov *= 0.9;
+		fdf->view.ymov *= 0.9;
+	}
 	if (fdf->view.zoom < 0.001)
 		fdf->view.zoom = 0.001;
 	if (fdf->view.zoom > 10000.0)
 		fdf->view.zoom = 10000.0;
+	printf("fdf->view.xmov -> %d\n", fdf->view.xmov);
+	printf("fdf->view.ymov -> %d\n", fdf->view.ymov);
 	refresh_view_zoom(fdf);
 	fdf->redraw = 1;
 }
