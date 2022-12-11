@@ -6,7 +6,7 @@
 /*   By: nlegrand <nlegrand@stud.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 23:58:48 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/11 01:53:40 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/11 06:14:14 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,13 @@ void	refresh_view_zoom(t_fdf *fdf)
 	fdf->view.cs += (fdf->view.cs == 0);
 	fdf->view.zs = fdf->view.zs_og * fdf->view.zoom;
 	fdf->view.zs += (fdf->view.zs == 0);
-	fdf->view.map_xcenter = fdf->mwidth * (fdf->view.cs - 1) / 2.0;
-	fdf->view.map_ycenter = fdf->mheight * (fdf->view.cs - 1) / 2.0;
+	fdf->view.map_xcenter = (fdf->mwidth - 1) * fdf->view.cs / 2.0;
+	fdf->view.map_ycenter = (fdf->mheight - 1) * fdf->view.cs / 2.0;
+	if (fdf->view.map_xcenter == 0)
+		fdf->view.map_xcenter = fdf->mwidth / 2.0;
+	if (fdf->view.map_ycenter == 0)
+		fdf->view.map_ycenter = fdf->mheight / 2.0;
+	refresh_view_move(fdf);
 }
 
 // Recalculates some view variables after performing a move

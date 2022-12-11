@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:44:31 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/11 01:42:24 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/11 05:32:24 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,8 @@ struct s_view
 	int		ri;
 	int		cs_og;
 	int		zs_og;
-	int		cs;
-	int		zs;
+	double	cs;
+	double	zs;
 	int		map_xcenter;
 	int		map_ycenter;
 	double	zoom;
