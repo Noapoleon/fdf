@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:52:46 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/12 18:04:15 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/12 22:52:10 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ int	fdf_win_setup(t_fdf *fdf)
 // Sets the view struct for matrix multiplication later
 int	fdf_view_setup(t_fdf *fdf, int ac, char **av)
 {
-	//set_vector_3d(fdf->view.i, 1.0, sin(-M_PI_4), -M_PI_4);
-	//set_vector_3d(fdf->view.j, cos(M_PI_4), sin(M_PI_4), M_PI_4);
 	fdf->view.ri = -4.0;
 	fdf->view.relief = 1;
 	fdf->view.zoom = 1.0;

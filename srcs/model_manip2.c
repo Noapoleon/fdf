@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 10:32:28 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/12 20:44:00 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/12 22:52:19 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ void	model_toggle_height(t_fdf *fdf)
 	int	x;
 	int	y;
 
-	printf("fdf->mmin = %d\n", fdf->mmin);
-	printf("fdf->mmax = %d\n", fdf->mmax);
 	fdf->view.height = (fdf->view.height == 0);
 	y = 0;
 	while (y < fdf->mheight)

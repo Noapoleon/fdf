@@ -6,7 +6,7 @@
 /*   By: nlegrand <nlegrand@stud.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 01:38:58 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/12 20:58:21 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/13 00:05:07 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,24 +70,27 @@ void	get_map_limits(t_fdf *fdf)
 
 void	map_relative_height(t_fdf *fdf)
 {
-	int		x;
-	int		y;
-	double	span;
-	int		r;
-	int		g;
+	int	x;
+	int	y;
+	int	c[3];
 
 	get_map_limits(fdf);
-	span = fdf->mmax - fdf->mmin;
 	y = 0;
 	while (y < fdf->mheight)
 	{
 		x = 0;
 		while (x < fdf->mwidth)
 		{
-			r = (int)(255.0 * ((fdf->map[y][x].z - fdf->mmin)
-				/ (span + 1))) & 0xff;
-			g = (int)(255 - r) & 0xff;
-			fdf->map[y][x].cols[1] = (r << 16) | (g << 8);
+			if (fdf->map[y][x].z > 0.0)
+			{
+				c[0] = 255 * (fdf->map[y][x].z / fdf->mmax);
+				fdf->map[y][x].cols[1] = (c[0] << 16) | 0xff << 8 | c[0];
+			}
+			else
+			{
+				c[0] = 255 - 220 * (fdf->map[y][x].z / fdf->mmin);
+				fdf->map[y][x].cols[1] = c[0];
+			}
 			++x;
 		}
 		++y;
