@@ -6,7 +6,7 @@
 /*   By: nlegrand <nlegrand@stud.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 01:38:58 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/13 00:05:07 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/13 00:19:54 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	map_relative_height(t_fdf *fdf)
 {
 	int	x;
 	int	y;
-	int	c[3];
+	int	c;
 
 	get_map_limits(fdf);
 	y = 0;
@@ -83,13 +83,13 @@ void	map_relative_height(t_fdf *fdf)
 		{
 			if (fdf->map[y][x].z > 0.0)
 			{
-				c[0] = 255 * (fdf->map[y][x].z / fdf->mmax);
-				fdf->map[y][x].cols[1] = (c[0] << 16) | 0xff << 8 | c[0];
+				c = 255 - 160 * (fdf->map[y][x].z / fdf->mmax);
+				fdf->map[y][x].cols[1] = c << 8;
 			}
 			else
 			{
-				c[0] = 255 - 220 * (fdf->map[y][x].z / fdf->mmin);
-				fdf->map[y][x].cols[1] = c[0];
+				c = 255 - 200 * (fdf->map[y][x].z / fdf->mmin);
+				fdf->map[y][x].cols[1] = c;
 			}
 			++x;
 		}
