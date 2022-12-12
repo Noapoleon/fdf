@@ -18,6 +18,7 @@ SRCS	:=	fdf.c \
 			hooks.c \
 			hooks2.c \
 			model_manip.c \
+			model_manip2.c \
 			project.c \
 			projections.c \
 			bresenham.c \

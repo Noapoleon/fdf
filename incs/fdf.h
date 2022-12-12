@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:44:31 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/11 07:13:56 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/12 11:50:28 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ struct	s_imgbuf
 struct s_view
 {
 	void	(*calc_coords)(t_fdf *fdf);
-	double	i[3];
-	double	j[3];
+	double	i[2];
+	double	j[2];
 	int		xoff;
 	int		yoff;
 	int		xmov;
@@ -140,13 +140,14 @@ void	fdf_destroy_map(t_fdf *fdf);
 void	fdf_terminate(t_fdf *fdf);
 void	fdf_exit_failure(void);
 // UTILS 2
-void	set_vector_3d(double v[3], double x, double y, double z);
+void	set_vector_2d(double v[3], double x, double y);
 int		abso(int a);
 void	clear_img(t_fdf *fdf, int col);
+void	do_nothing(void *ptr);
+// UTILS 3
 void	refresh_view_zoom(t_fdf *fdf);
 void	refresh_view_move(t_fdf *fdf);
-// UTILS 3
-void	do_nothing(void *ptr);
+void	refresh_view_rotate(t_fdf *fdf);
 
 // HOOKS
 void	set_hooks(t_fdf *fdf);
@@ -162,8 +163,10 @@ int		mouse_move_h(int x, int y, t_fdf *fdf);
 void	model_zoom(t_fdf *fdf, int button);
 void	model_move(t_fdf *fdf, int x, int y);
 void	model_rotate(t_fdf *fdf, int dir);
-void	model_flatten(t_fdf *fdf);
+void	model_relief(t_fdf *fdf);
 void	model_set_proj(t_fdf *fdf, int keycode);
+// MODEL MANIP 2
+void	model_view_focus(t_fdf *fdf);
 
 // PROJECT
 void	plot_map(t_fdf *fdf);

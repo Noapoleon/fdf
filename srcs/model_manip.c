@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:52:05 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/11 07:31:31 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/12 12:00:14 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,26 @@
 void	model_zoom(t_fdf *fdf, int button)
 {
 	if (button == MOUSE_SCROLL_UP)
-	{
 		fdf->view.zoom *= 1.1;
-		fdf->view.xmov *= 1.1;
-		fdf->view.ymov *= 1.1;
-	}
 	else
-	{
 		fdf->view.zoom *= 0.9;
-		fdf->view.xmov *= 0.9;
-		fdf->view.ymov *= 0.9;
-	}
 	if (fdf->view.zoom < 0.001)
 		fdf->view.zoom = 0.001;
 	if (fdf->view.zoom > 10000.0)
 		fdf->view.zoom = 10000.0;
-	printf("fdf->view.xmov -> %d\n", fdf->view.xmov);
-	printf("fdf->view.ymov -> %d\n", fdf->view.ymov);
+	if (fdf->view.zoom != 10000.0 && fdf->view.zoom != 0.001)
+	{
+		if (button == MOUSE_SCROLL_UP)
+		{
+		fdf->view.xmov *= 1.1;
+		fdf->view.ymov *= 1.1;
+		}
+		else
+		{
+		fdf->view.xmov *= 0.9;
+		fdf->view.ymov *= 0.9;
+		}
+	}
 	refresh_view_zoom(fdf);
 	fdf->redraw = 1;
 }
@@ -48,28 +51,17 @@ void	model_move(t_fdf *fdf, int x, int y)
 
 void	model_rotate(t_fdf *fdf, int dir)
 {
-	const double	*i = fdf->view.i;
-	const double	*j = fdf->view.j;
-
-	fdf->view.i[2] += (M_PI_4 / 4.0) * dir;
-	fdf->view.j[2] += (M_PI_4 / 4.0) * dir;
 	fdf->view.ri += dir;
 	if (fdf->view.ri > 16)
-	{
 		fdf->view.ri -= 32;
-		fdf->view.i[2] -= 2 * M_PI;
-	}
-	if (fdf->view.ri <= -16)
-	{
+	else if (fdf->view.ri <= -16)
 		fdf->view.ri += 32;
-		fdf->view.i[2] += 2 * M_PI;
-	}
-	set_vector_3d(fdf->view.i, cos(i[2]), sin(i[2]), i[2]);
-	set_vector_3d(fdf->view.j, cos(j[2]), sin(j[2]), j[2]);
+	printf("fdf->view.ri -> %d\n", fdf->view.ri);
+	refresh_view_rotate(fdf);
 	fdf->redraw = 1;
 }
 
-void	model_flatten(t_fdf *fdf)
+void	model_relief(t_fdf *fdf)
 {
 	fdf->view.relief = (fdf->view.relief == 0);
 	fdf->redraw = 1;

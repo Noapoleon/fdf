@@ -8,8 +8,20 @@
 - rething s_nlgw to include the map and maybe call it something else
 - when doing colored lines. only do gradient computations if both sides or not
   the same color
-- handle empty maps (THERE'S A LOT TO DO WITH THE PARSER AND FORMAT)
 
 IMP:
-	- MAKEFILE doesn't work well. (obj dir non existant and fails to find clean rule or something)
-	- include minilibx sources and libft sources in repo without .git dir
+	- [FIXED] MAKEFILE doesn't work well. (obj dir non existant and fails to find clean rule or something)
+	- [FIXED] include minilibx sources and libft sources in repo without .git dir
+	- Zoom going to middle after doing it a lot.
+	- [FIXED] limit zoom xmov thing
+	- handle empty maps (THERE'S A LOT TO DO WITH THE PARSER AND FORMAT)
+	- ui
+
+
+KEYBINDINGS
+	- r : relief
+	- f : focus
+	- zoom: scroll
+	- move: left click drag
+	- right click? 
+	- e and q : rotate

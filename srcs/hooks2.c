@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 17:02:44 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/11 07:27:56 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/12 11:50:41 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 // Exits mlx_loop if escape key is pressed
 int	key_press_h(int keycode, t_fdf *fdf)
 {
-	if (keycode == 'r')
-		model_rotate(fdf, 1);
-	else if (keycode == 'e')
-		model_rotate(fdf, -1);
+	if (keycode == 'q' || keycode == 'e')
+		model_rotate(fdf, 1 + (keycode == 'e') * -2);
+	else if (keycode == 'r')
+		model_relief(fdf);
 	else if (keycode == 'f')
-		model_flatten(fdf);
+		model_view_focus(fdf);
 	else if (keycode == '1' || keycode == '2')
 		model_set_proj(fdf, keycode);
 	else if (keycode == KEY_ESC)

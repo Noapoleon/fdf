@@ -6,7 +6,7 @@
 /*   By: nlegrand <nlegrand@stud.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 21:54:41 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/11 01:28:29 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/12 11:35:11 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void	fdf_vars_init(t_fdf *fdf)
 void	view_vars_init(t_view *view)
 {
 	view->calc_coords = &calc_iso_proj;
-	set_vector_3d(view->i, 0.0, 0.0, 0.0);
-	set_vector_3d(view->j, 0.0, 0.0, 0.0);
+	set_vector_2d(view->i, 0.0, 0.0);
+	set_vector_2d(view->j, 0.0, 0.0);
 	view->xoff = 0;
 	view->yoff = 0;
 	view->xmov = 0;

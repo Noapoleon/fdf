@@ -6,7 +6,7 @@
 /*   By: nlegrand <nlegrand@stud.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 22:09:46 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/11 02:13:57 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/12 12:01:59 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	destroy_h(t_fdf *fdf)
 
 void	center_overlay(t_fdf *fdf)
 {
+	// REMOVE LATER
 	t_vertex vu;
 	t_vertex vd;
 	t_vertex vl;
@@ -62,7 +63,7 @@ int	loop_h(t_fdf *fdf)
 	{
 		clear_img(fdf, 0);
 		plot_map(fdf);
-		center_overlay(fdf);
+//		center_overlay(fdf); // REMOVE LATER
 		mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img.img, 0, 0);
 		fdf->redraw = 0;
 	}
