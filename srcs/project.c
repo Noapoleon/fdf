@@ -6,7 +6,7 @@
 /*   By: nlegrand <nlegrand@stud.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 16:29:33 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/11 01:35:33 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/12 15:41:07 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	plot_map(t_fdf *fdf)
 {
 	(fdf->view.calc_coords)(fdf);
-	if (fdf->view.ri > -8 && fdf->view.ri <= 8)
+	if (isgreater(fdf->view.ri, -8.0) && islessequal(fdf->view.ri, 8.0))
 		plot_up_left(fdf);
 	else
 		plot_down_right(fdf);

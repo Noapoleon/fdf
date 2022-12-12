@@ -1,0 +1,46 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    controls                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/12/12 17:45:28 by nlegrand          #+#    #+#              #
+#    Updated: 2022/12/12 19:57:26 by nlegrand         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+#########################
+### KEYBOARD CONTROLS ###
+#########################
+
+esc	: quit program
+
+w	: linear scale z up
+s	: linear scale z down
+i	: exponential scale z up
+k	: exponential scale z down
+r	: toggle map relief
+f	: focus map
+
+1	: isometric projection
+2	: military projection
+3	: top down projection
+
+#########################
+#########################
+#########################
+
+######################
+### MOUSE CONTROLS ###
+######################
+
+left click	: move map
+right click	: rotate map
+
+scroll up	: zoom in
+scroll down	: zoom out
+
+######################
+######################
+######################

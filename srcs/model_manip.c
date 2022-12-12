@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:52:05 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/12 12:00:14 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/12 17:01:09 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,30 @@ void	model_move(t_fdf *fdf, int x, int y)
 	fdf->redraw = 1;
 }
 
-void	model_rotate(t_fdf *fdf, int dir)
+void	model_rotate(t_fdf *fdf, int x)
 {
-	fdf->view.ri += dir;
+	double diff;
+
+	diff = -((x - fdf->view.rot_start) / 150.0) * M_PI;
+	fdf->view.ri += diff;
 	if (fdf->view.ri > 16)
 		fdf->view.ri -= 32;
 	else if (fdf->view.ri <= -16)
 		fdf->view.ri += 32;
-	printf("fdf->view.ri -> %d\n", fdf->view.ri);
+	fdf->view.rot_start = x;
 	refresh_view_rotate(fdf);
 	fdf->redraw = 1;
 }
+//void	model_rotate(t_fdf *fdf, int dir)
+//{
+//	fdf->view.ri += dir;
+//	if (fdf->view.ri > 16)
+//		fdf->view.ri -= 32;
+//	else if (fdf->view.ri <= -16)
+//		fdf->view.ri += 32;
+//	refresh_view_rotate(fdf);
+//	fdf->redraw = 1;
+//}
 
 void	model_relief(t_fdf *fdf)
 {
@@ -73,5 +86,7 @@ void	model_set_proj(t_fdf *fdf, int keycode)
 		fdf->view.calc_coords = &calc_iso_proj;
 	else if (keycode == '2')
 		fdf->view.calc_coords = &calc_mili_proj;
+	else if (keycode == '3')
+		fdf->view.calc_coords = &calc_flat_proj;
 	fdf->redraw = 1;
 }

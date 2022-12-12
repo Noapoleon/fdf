@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:44:31 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/12 11:50:28 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/12 20:27:38 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <X11/X.h>
 # include <math.h>
 
-# define WIN_MAX_WIDTH	1800
+# define WIN_MAX_WIDTH	1600
 # define WIN_MAX_HEIGHT	1000
 # define WIN_TITLE		"fdf"
 # define HEX_SET		"0123456789abcdef"
@@ -32,15 +32,15 @@
 # define M_COLR			0x00ff0000
 # define M_COLG			0x0000ff00
 # define M_COLB			0x000000ff
-
 # define KEY_ESC	65307
-
 # define MOUSE_LEFT 1
 # define MOUSE_RIGHT 3
 # define MOUSE_MIDDLE 2
 # define MOUSE_SCROLL_UP 4
 # define MOUSE_SCROLL_DOWN 5
+# define ROT_SPEED 250.0
 
+// ERROR MESSAGES
 # define USAGE		"Usage: %s <filename> [case_size z_size]\n"
 # define MLX_ERROR	"[ERROR] Failed to establish connection to X server.\n"
 # define MAP_ERROR			"[ERROR] Failed to parse map.\n"
@@ -88,28 +88,31 @@ struct s_view
 	double	j[2];
 	int		xoff;
 	int		yoff;
+	int		move;
 	int		xmov;
 	int		ymov;
-	int		move;
 	int		mov_start[2];
 	int		rotate;
-	int		rot_start[2];
-	int		ri;
-	int		cs_og;
-	int		zs_og;
+	int		rot_start;
+	double	ri;
+	double	amp;
+	double	cs_og;
+	double	zs_og;
 	double	cs;
 	double	zs;
 	int		map_xcenter;
 	int		map_ycenter;
 	double	zoom;
 	int		relief;
+	int		height;
 };
 struct	s_vertex
 {
-	int	x;
-	int	y;
-	int	z;
+	double	x;
+	double	y;
+	double	z;
 	int	c;
+	int	cols[2];
 };
 struct s_fdf
 {
@@ -124,6 +127,8 @@ struct s_fdf
 	int			wheight;
 	int			mwidth;
 	int			mheight;
+	int			mmin;
+	int			mmax;
 	int			redraw;
 };
 
@@ -140,7 +145,7 @@ void	fdf_destroy_map(t_fdf *fdf);
 void	fdf_terminate(t_fdf *fdf);
 void	fdf_exit_failure(void);
 // UTILS 2
-void	set_vector_2d(double v[3], double x, double y);
+void	set_vector_2d(double v[2], double x, double y);
 int		abso(int a);
 void	clear_img(t_fdf *fdf, int col);
 void	do_nothing(void *ptr);
@@ -148,6 +153,8 @@ void	do_nothing(void *ptr);
 void	refresh_view_zoom(t_fdf *fdf);
 void	refresh_view_move(t_fdf *fdf);
 void	refresh_view_rotate(t_fdf *fdf);
+void	get_map_limits(t_fdf *fdf);
+void	map_relative_height(t_fdf *fdf);
 
 // HOOKS
 void	set_hooks(t_fdf *fdf);
@@ -167,6 +174,8 @@ void	model_relief(t_fdf *fdf);
 void	model_set_proj(t_fdf *fdf, int keycode);
 // MODEL MANIP 2
 void	model_view_focus(t_fdf *fdf);
+void	model_scale_amp(t_fdf *fdf, int keycode);
+void	model_toggle_height(t_fdf *fdf);
 
 // PROJECT
 void	plot_map(t_fdf *fdf);
@@ -177,6 +186,7 @@ int		check_out(t_fdf *fdf, t_vertex *v0, t_vertex *v1);
 // PROJECTIONS
 void	calc_iso_proj(t_fdf *fdf);
 void	calc_mili_proj(t_fdf *fdf);
+void	calc_flat_proj(t_fdf *fdf);
 
 // BRESENHAM
 void	plot_line(t_fdf *fdf, t_vertex *v0, t_vertex *v1);

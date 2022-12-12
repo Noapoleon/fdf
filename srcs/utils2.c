@@ -6,14 +6,14 @@
 /*   By: nlegrand <nlegrand@stud.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 23:58:48 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/12 11:40:28 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/12 16:33:04 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
 // gives x, y and z coordinates to 2d vector
-void	set_vector_2d(double v[3], double x, double y)
+void	set_vector_2d(double v[2], double x, double y)
 {
 	v[0] = x;
 	v[1] = y;
@@ -52,3 +52,8 @@ void	do_nothing(void *ptr)
 {
 	(void)ptr;
 }
+
+//void	ui()
+//{
+//	mlx
+//}

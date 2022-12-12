@@ -49,6 +49,8 @@ $(NAME): $(OBJS)
 $(OBJDIR):
 	mkdir -p $(OBJDIR)
 
+srcs: $(OBJS)
+
 libft:
 	make re -C $(LIBFT)
 	cp $(LIBFT)/libft.a $(LIBDIR)/
@@ -72,7 +74,7 @@ re: fclean libft mlx all
 
 bonus: all
 
-.PHONY: all clean fclean re bonus libft mlx
+.PHONY: all clean fclean re bonus srcs libft mlx
 
 showlists:
 	echo $(SRCS)

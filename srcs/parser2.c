@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 18:31:36 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/09 15:44:16 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/12 20:28:26 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,13 @@ void	set_color(t_vertex *vertex, char **line)
 	unsigned int	x;
 	char			*s;
 
+	if (**line != ',')
+	{
+		vertex->c = 0x00ffffff;
+		vertex->cols[0] = 0x00ffffff;
+		vertex->cols[1] = 0;
+		return ;
+	}
 	s = *line + 3;
 	x = 0;
 	while (*s && ((*s >= '0' && *s <= '9') || (*s >= 'a' && *s <= 'f')
@@ -50,5 +57,6 @@ void	set_color(t_vertex *vertex, char **line)
 		++s;
 	}
 	vertex->c = x & M_COL;
+	vertex->cols[0] = x & M_COL;
 	*line = s;
 }

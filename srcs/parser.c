@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 18:13:50 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/11 01:32:56 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/12 20:23:19 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,14 +104,11 @@ int	parse_line(t_fdf *fdf, t_list *tmp, char *line)
 		varr[i].z = ft_atoi(line);
 		while (*line == '-' || (*line >= '0' && *line <= '9'))
 			++line;
-		varr[i].c = 0x00ffffff;
-		if (*line == ',')
-			set_color(varr + i, &line);
+		set_color(varr + i, &line);
 		++i;
 		while (*line && *line == ' ')
 			++line;
 	}
-	tmp->content = varr;
 	return ((tmp->content = varr), 0);
 }
 

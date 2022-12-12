@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:52:46 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/12 11:42:15 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/12 18:04:15 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	fdf_setup(t_fdf *fdf, int ac, char **av)
 		(ft_dprintf(2, MLX_ERROR), fdf_exit_failure());
 	if (parse_map(fdf, av[1]) == -1)
 		(fdf_terminate(fdf), ft_dprintf(2, MAP_ERROR), fdf_exit_failure());
+	map_relative_height(fdf);
 	if (fdf_win_setup(fdf) == -1)
 		(fdf_terminate(fdf), ft_dprintf(2, WIN_ERROR), fdf_exit_failure());
 	if (fdf_view_setup(fdf, ac, av) == -1)
@@ -52,7 +53,7 @@ int	fdf_view_setup(t_fdf *fdf, int ac, char **av)
 {
 	//set_vector_3d(fdf->view.i, 1.0, sin(-M_PI_4), -M_PI_4);
 	//set_vector_3d(fdf->view.j, cos(M_PI_4), sin(M_PI_4), M_PI_4);
-	fdf->view.ri = -4;
+	fdf->view.ri = -4.0;
 	fdf->view.relief = 1;
 	fdf->view.zoom = 1.0;
 	fdf->view.cs_og = 20;

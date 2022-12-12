@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 17:02:44 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/12 11:50:41 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/12 20:18:56 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,15 @@
 // Exits mlx_loop if escape key is pressed
 int	key_press_h(int keycode, t_fdf *fdf)
 {
-	if (keycode == 'q' || keycode == 'e')
-		model_rotate(fdf, 1 + (keycode == 'e') * -2);
-	else if (keycode == 'r')
+	if (keycode == 'r')
 		model_relief(fdf);
 	else if (keycode == 'f')
 		model_view_focus(fdf);
-	else if (keycode == '1' || keycode == '2')
+	else if (keycode == 'h')
+		model_toggle_height(fdf);
+	else if (keycode != 0 && ft_strchr("wsik", keycode))
+		model_scale_amp(fdf, keycode);
+	else if (keycode >= '1' && keycode <= '3')
 		model_set_proj(fdf, keycode);
 	else if (keycode == KEY_ESC)
 	{
@@ -41,6 +43,11 @@ int	mouse_press_h(int button, int x, int y, t_fdf *fdf)
 		fdf->view.mov_start[0] = x;
 		fdf->view.mov_start[1] = y;
 	}
+	else if (button == MOUSE_RIGHT)
+	{
+		fdf->view.rotate = 1;
+		fdf->view.rot_start = x;
+	}
 	return (0);
 }
 
@@ -50,6 +57,8 @@ int	mouse_release_h(int button, int x, int y, t_fdf *fdf)
 	(void)y;
 	if (button == MOUSE_LEFT)
 		fdf->view.move = 0;
+	if (button == MOUSE_RIGHT)
+		fdf->view.rotate = 0;
 	return (0);
 }
 
@@ -57,5 +66,7 @@ int	mouse_move_h(int x, int y, t_fdf *fdf)
 {
 	if (fdf->view.move)
 		model_move(fdf, x, y);
+	if (fdf->view.rotate)
+		model_rotate(fdf, x);
 	return (0);
 }
