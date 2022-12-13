@@ -50,11 +50,14 @@ $(NAME): $(LIBDIR)/libft.a $(LIBDIR)/libmlx.a $(OBJS)
 $(OBJDIR):
 	mkdir -p $(OBJDIR)
 
-$(LIBDIR)/libft.a:
+$(LIBDIR):
+	mkdir -p $(LIBDIR)
+
+$(LIBDIR)/libft.a: | $(LIBDIR)
 	make -C $(LIBFT)
 	cp $(LIBFT)/libft.a $(LIBDIR)/
 
-$(LIBDIR)/libmlx.a:
+$(LIBDIR)/libmlx.a: | $(LIBDIR)
 	make -C $(MLX)
 	cp $(MLX)/libmlx.a $(LIBDIR)/
 
