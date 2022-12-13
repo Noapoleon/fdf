@@ -43,8 +43,6 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
 all: $(NAME)
 
 $(NAME): $(LIBDIR)/libft.a $(LIBDIR)/libmlx.a $(OBJS)
-	make -C $(LIBFT)
-	make -C $(MLX)
 	$(CC) $(DEBUG) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME)
 
 $(OBJDIR):
@@ -61,7 +59,10 @@ $(LIBDIR)/libmlx.a: | $(LIBDIR)
 	make -C $(MLX)
 	cp $(MLX)/libmlx.a $(LIBDIR)/
 
-resrcs: $(OBJS)
+resrcs: cleansrcs $(OBJS)
+
+cleansrcs:
+	$(RM) $(OBJS)
 
 relibft:
 	make re -C $(LIBFT)
@@ -82,11 +83,11 @@ fclean: clean
 	$(RM) $(NAME)
 	
 
-re: fclean libft mlx all
+re: fclean all
 
 bonus: all
 
-.PHONY: all clean fclean re bonus srcs libft mlx
+.PHONY: all clean fclean re bonus resrcs cleansrcs relibft remlx
 
 showlists:
 	echo $(SRCS)
