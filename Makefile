@@ -61,7 +61,10 @@ $(LIBDIR)/libmlx.a: | $(LIBDIR)
 	make -C $(MLX)
 	cp $(MLX)/libmlx.a $(LIBDIR)/
 
-resrcs: $(OBJS)
+resrcs: cleansrcs $(OBJS)
+
+cleansrcs:
+	$(RM) $(OBJS)
 
 relibft:
 	make re -C $(LIBFT)
@@ -82,11 +85,11 @@ fclean: clean
 	$(RM) $(NAME)
 	
 
-re: fclean libft mlx all
+re: fclean all
 
 bonus: all
 
-.PHONY: all clean fclean re bonus resrcs relibft remlx
+.PHONY: all clean fclean re bonus resrcs cleansrcs relibft remlx
 
 showlists:
 	echo $(SRCS)
