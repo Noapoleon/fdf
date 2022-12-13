@@ -77,8 +77,8 @@ clean:
 	$(RM) $(OBJS)
 
 fclean: clean
-	$(RM) $(LIBFT)/libft.a
-	$(RM) $(MLX)/libmlx.a
+	$(RM) $(LIBFT)/libft.a $(LIBDIR)/libft.a
+	$(RM) $(MLX)/libmlx.a $(LIBDIR)/libmlx.a
 	$(RM) $(NAME)
 	
 
