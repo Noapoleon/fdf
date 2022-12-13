@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:52:46 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/13 01:01:32 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/13 20:03:44 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ int	fdf_view_setup(t_fdf *fdf, int ac, char **av)
 	fdf->view.zs_og = fdf->view.cs_og;
 	if (ac == 4)
 	{
-		fdf->view.cs_og = atoi(av[2]);
+		fdf->view.cs_og = ft_atoi(av[2]);
 		fdf->view.cs_og += (fdf->view.cs_og <= 0);
-		fdf->view.zs_og = atoi(av[3]);
+		fdf->view.zs_og = ft_atoi(av[3]);
 		fdf->view.zs_og += (fdf->view.zs_og == 0);
 	}
 	refresh_view_zoom(fdf);
