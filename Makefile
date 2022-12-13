@@ -86,7 +86,7 @@ re: fclean libft mlx all
 
 bonus: all
 
-.PHONY: all clean fclean re bonus srcs libft mlx
+.PHONY: all clean fclean re bonus resrcs relibft remlx
 
 showlists:
 	echo $(SRCS)
