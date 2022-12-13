@@ -33,17 +33,18 @@ CC		=	cc
 CFLAGS	=	-Wall -Wextra -Werror
 LIBS	=	-L./$(LIBDIR) -lft -lmlx -lm -lX11 -lXext
 INCS	=	-I./$(INCDIR)
-DEBUG = -g3 -O0
 
 # Other
 RM	=	rm -rf
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
-	$(CC) $(DEBUG) $(CFLAGS) $(INCS) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCS) -c $< -o $@
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
+	make -C $(LIBFT)
+	make -C $(MLX)
 	$(CC) $(DEBUG) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME)
 
 $(OBJDIR):
