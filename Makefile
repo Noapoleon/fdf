@@ -43,8 +43,6 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
 all: $(NAME)
 
 $(NAME): $(LIBDIR)/libft.a $(LIBDIR)/libmlx.a $(OBJS)
-	make -C $(LIBFT)
-	make -C $(MLX)
 	$(CC) $(DEBUG) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME)
 
 $(OBJDIR):
