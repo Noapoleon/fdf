@@ -42,7 +42,7 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
+$(NAME): $(LIBDIR)/libft.a $(LIBDIR)/libmlx.a $(OBJS)
 	make -C $(LIBFT)
 	make -C $(MLX)
 	$(CC) $(DEBUG) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME)
@@ -50,13 +50,21 @@ $(NAME): $(OBJS)
 $(OBJDIR):
 	mkdir -p $(OBJDIR)
 
-srcs: $(OBJS)
+$(LIBDIR)/libft.a:
+	make -C $(LIBFT)
+	cp $(LIBFT)/libft.a $(LIBDIR)/
 
-libft:
+$(LIBDIR)/libmlx.a:
+	make -C $(MLX)
+	cp $(MLX)/libmlx.a $(LIBDIR)/
+
+resrcs: $(OBJS)
+
+relibft:
 	make re -C $(LIBFT)
 	cp $(LIBFT)/libft.a $(LIBDIR)/
 
-mlx:
+remlx:
 	make re -C $(MLX)
 	cp $(MLX)/libmlx.a $(LIBDIR)/
 
