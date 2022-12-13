@@ -6,12 +6,15 @@
 /*   By: nlegrand <nlegrand@stud.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 00:37:53 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/12 15:49:16 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/13 01:00:10 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
+// Draws a line on the image with two given coordinates using bresenham's
+// algorithm
+// Switches arguments order in order to handle all possible angles (8 octants)
 void	plot_line(t_fdf *fdf, t_vertex *v0, t_vertex *v1)
 {
 	if (abso(v1->x - v0->x) > abso(v1->y - v0->y))
@@ -30,6 +33,8 @@ void	plot_line(t_fdf *fdf, t_vertex *v0, t_vertex *v1)
 	}
 }
 
+// Sub-function of plot_line handles octants whose angles is less than 45
+// degrees
 void	plot_line_low(t_fdf *fdf, t_vertex v0, t_vertex v1)
 {
 	const int	dx = v1.x - v0.x;
@@ -56,6 +61,8 @@ void	plot_line_low(t_fdf *fdf, t_vertex v0, t_vertex v1)
 	}
 }
 
+// Sub-function of plot_line handles octants whose angles is more than 45
+// degrees
 void	plot_line_high(t_fdf *fdf, t_vertex v0, t_vertex v1)
 {
 	const int	dy = v1.y - v0.y;
@@ -82,6 +89,9 @@ void	plot_line_high(t_fdf *fdf, t_vertex v0, t_vertex v1)
 	}
 }
 
+// Substitue function for mlx_pixel_put
+// Writes pixels into the image buffer instead of directly to the screen for
+// much better performance
 void	my_pixel_put(t_fdf *fdf, int x, int y, int col)
 {
 	char	*dst;
@@ -93,6 +103,8 @@ void	my_pixel_put(t_fdf *fdf, int x, int y, int col)
 	}
 }
 
+// Computes the color of each pixel in a line between 2 vertices to make a
+// gradient line
 int	grad_col(t_grad *grad, t_vertex *v0, t_vertex *v1, int pos)
 {
 	int				r;

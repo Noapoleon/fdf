@@ -6,7 +6,7 @@
 /*   By: nlegrand <nlegrand@stud.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 21:54:41 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/12 20:41:02 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/13 00:50:58 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	fdf_terminate(t_fdf *fdf)
 	}
 }
 
-// exits the program and printf and error context message
+// exits the program and printf an error context message
 void	fdf_exit_failure(void)
 {
 	perror("[EXIT] fdf_setup()");

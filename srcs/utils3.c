@@ -6,7 +6,7 @@
 /*   By: nlegrand <nlegrand@stud.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 01:38:58 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/13 00:19:54 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/13 00:52:50 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	refresh_view_move(t_fdf *fdf)
 // recalculates unit vectors locations
 void	refresh_view_rotate(t_fdf *fdf)
 {
-	const double i = fdf->view.ri * (M_PI_4 / 4.0);
-	const double j = (8 + fdf->view.ri) * (M_PI_4 / 4.0);
+	const double	i = fdf->view.ri * (M_PI_4 / 4.0);
+	const double	j = (8 + fdf->view.ri) * (M_PI_4 / 4.0);
 
 	fdf->view.i[0] = cos(i);
 	fdf->view.i[1] = sin(i);
@@ -45,6 +45,8 @@ void	refresh_view_rotate(t_fdf *fdf)
 	fdf->view.j[1] = sin(j);
 }
 
+// Finds map lowest and highest z coordinate for height map mode
+// Will be off by one if the coordinate is 0 to avoid 0 division
 void	get_map_limits(t_fdf *fdf)
 {
 	int	x;
@@ -66,8 +68,14 @@ void	get_map_limits(t_fdf *fdf)
 		}
 		++y;
 	}
+	if (fdf->mmin == 0)
+		fdf->mmin = -1;
+	if (fdf->mmax == 0)
+		fdf->mmax = 1;
 }
 
+// Calculates the color for every vertex based on their relative positions
+// compared to the highest and lower points of the map
 void	map_relative_height(t_fdf *fdf)
 {
 	int	x;
@@ -82,15 +90,10 @@ void	map_relative_height(t_fdf *fdf)
 		while (x < fdf->mwidth)
 		{
 			if (fdf->map[y][x].z > 0.0)
-			{
-				c = 255 - 160 * (fdf->map[y][x].z / fdf->mmax);
-				fdf->map[y][x].cols[1] = c << 8;
-			}
+				c = (int)(255 - 200 * (fdf->map[y][x].z / fdf->mmax)) << 8;
 			else
-			{
 				c = 255 - 200 * (fdf->map[y][x].z / fdf->mmin);
-				fdf->map[y][x].cols[1] = c;
-			}
+			fdf->map[y][x].cols[1] = c;
 			++x;
 		}
 		++y;

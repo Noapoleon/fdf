@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:52:46 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/12 22:52:10 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/13 01:01:32 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	fdf_view_setup(t_fdf *fdf, int ac, char **av)
 	return (0);
 }
 
+// Safely creates an mlx image
 int	fdf_img_setup(t_fdf *fdf)
 {
 	fdf->img.img = mlx_new_image(fdf->mlx, fdf->wwidth, fdf->wheight);

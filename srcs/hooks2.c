@@ -6,13 +6,13 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 17:02:44 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/12 20:18:56 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/13 00:42:28 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-// Exits mlx_loop if escape key is pressed
+// Binds keypresses to functions
 int	key_press_h(int keycode, t_fdf *fdf)
 {
 	if (keycode == 'r')
@@ -33,6 +33,7 @@ int	key_press_h(int keycode, t_fdf *fdf)
 	return (0);
 }
 
+// Uses move movements and clicks to enable movement and rotation modes
 int	mouse_press_h(int button, int x, int y, t_fdf *fdf)
 {
 	if (button == MOUSE_SCROLL_UP || button == MOUSE_SCROLL_DOWN)
@@ -51,6 +52,7 @@ int	mouse_press_h(int button, int x, int y, t_fdf *fdf)
 	return (0);
 }
 
+// Disables rotation and movement modes when the buttons are released
 int	mouse_release_h(int button, int x, int y, t_fdf *fdf)
 {
 	(void)x;
@@ -62,6 +64,8 @@ int	mouse_release_h(int button, int x, int y, t_fdf *fdf)
 	return (0);
 }
 
+// Captures mouse coordinates and updates variables in view struct for movement
+// and rotation
 int	mouse_move_h(int x, int y, t_fdf *fdf)
 {
 	if (fdf->view.move)

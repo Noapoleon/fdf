@@ -6,12 +6,14 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 10:32:28 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/12 22:52:19 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/13 00:47:38 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
+// Resets some view variables to recenter map on screen
+// Not all view variables are reset
 void	model_view_focus(t_fdf *fdf)
 {
 	fdf->view.zoom = 1.0;
@@ -22,6 +24,8 @@ void	model_view_focus(t_fdf *fdf)
 	fdf->redraw = 1;
 }
 
+// Changes to amplitude view variable that will be multiplied to each vertex's
+// z coordinate
 void	model_scale_amp(t_fdf *fdf, int keycode)
 {
 	if (keycode == 'w')
@@ -43,6 +47,7 @@ void	model_scale_amp(t_fdf *fdf, int keycode)
 	fdf->redraw = 1;
 }
 
+// Toggles on and off height map view mode
 void	model_toggle_height(t_fdf *fdf)
 {
 	int	x;

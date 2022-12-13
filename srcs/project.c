@@ -6,12 +6,13 @@
 /*   By: nlegrand <nlegrand@stud.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 16:29:33 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/12 15:41:07 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/13 00:50:01 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
+// Writes map pixels to the image buffer
 void	plot_map(t_fdf *fdf)
 {
 	(fdf->view.calc_coords)(fdf);
@@ -21,6 +22,8 @@ void	plot_map(t_fdf *fdf)
 		plot_down_right(fdf);
 }
 
+// Draws the map start from the top left vertex
+// Prevents clipping of lines when map rotation is higher than 180 degrees
 void	plot_up_left(t_fdf *fdf)
 {
 	int	x;
@@ -44,6 +47,8 @@ void	plot_up_left(t_fdf *fdf)
 	}
 }
 
+// Draws the map start from the bottom right vertex
+// Prevents clipping of lines when map rotation is lower than 180 degrees
 void	plot_down_right(t_fdf *fdf)
 {
 	int	x;
@@ -65,8 +70,7 @@ void	plot_down_right(t_fdf *fdf)
 	}
 }
 
-// Prevents drawing lines outside of the window completely
-// (not all cases covered)
+// Prevents drawing lines completely outside of the window
 int	check_out(t_fdf *fdf, t_vertex *v0, t_vertex *v1)
 {
 	if ((v0->x < 0 && v1->x < 0)

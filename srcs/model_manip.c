@@ -6,12 +6,14 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:52:05 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/12 17:01:09 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/13 00:47:23 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
+// Updates view for variables for zooming
+// Triggers a redraw
 void	model_zoom(t_fdf *fdf, int button)
 {
 	if (button == MOUSE_SCROLL_UP)
@@ -39,6 +41,8 @@ void	model_zoom(t_fdf *fdf, int button)
 	fdf->redraw = 1;
 }
 
+// Updates view variables for movement
+// Triggers a redraw
 void	model_move(t_fdf *fdf, int x, int y)
 {
 	fdf->view.xmov += x - fdf->view.mov_start[0];
@@ -49,9 +53,11 @@ void	model_move(t_fdf *fdf, int x, int y)
 	fdf->redraw = 1;
 }
 
+// Updates view variables for rotation
+// Triggers a redraw
 void	model_rotate(t_fdf *fdf, int x)
 {
-	double diff;
+	double	diff;
 
 	diff = -((x - fdf->view.rot_start) / 150.0) * M_PI;
 	fdf->view.ri += diff;
@@ -63,23 +69,16 @@ void	model_rotate(t_fdf *fdf, int x)
 	refresh_view_rotate(fdf);
 	fdf->redraw = 1;
 }
-//void	model_rotate(t_fdf *fdf, int dir)
-//{
-//	fdf->view.ri += dir;
-//	if (fdf->view.ri > 16)
-//		fdf->view.ri -= 32;
-//	else if (fdf->view.ri <= -16)
-//		fdf->view.ri += 32;
-//	refresh_view_rotate(fdf);
-//	fdf->redraw = 1;
-//}
 
+// Toggles on and off the z coordinates displacement
 void	model_relief(t_fdf *fdf)
 {
 	fdf->view.relief = (fdf->view.relief == 0);
 	fdf->redraw = 1;
 }
 
+// Changes the fdf->view.calc_coords function pointer to appropriate projection
+// mode
 void	model_set_proj(t_fdf *fdf, int keycode)
 {
 	if (keycode == '1')

@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:44:31 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/12 20:27:38 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/13 01:04:41 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@
 # define MAP_ERROR			"[ERROR] Failed to parse map.\n"
 # define VIEW_ERROR	"[ERROR] Failed to set view properties.\n"
 # define WIN_ERROR	"[ERROR] Failed to create mlx window.\n"
-# define IMG_ERROR	"[ERROR] Failed to craete mlx image.\n"
+# define IMG_ERROR	"[ERROR] Failed to create mlx image.\n"
 
 // Map Error Messages
 # define MAP_FAIL_OPEN		"[ERROR] Failed to open map.\n"
@@ -111,8 +111,8 @@ struct	s_vertex
 	double	x;
 	double	y;
 	double	z;
-	int	c;
-	int	cols[2];
+	int		c;
+	int		cols[2];
 };
 struct s_fdf
 {
