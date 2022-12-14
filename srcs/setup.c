@@ -6,7 +6,7 @@
 /*   By: nlegrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:52:46 by nlegrand          #+#    #+#             */
-/*   Updated: 2022/12/13 20:03:44 by nlegrand         ###   ########.fr       */
+/*   Updated: 2022/12/14 03:54:31 by nlegrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 void	fdf_setup(t_fdf *fdf, int ac, char **av)
 {
 	if (ac != 2 && ac != 4)
-		(ft_dprintf(2, USAGE, av[0]), exit(EXIT_FAILURE));
+		(ft_printf(USAGE, av[0]), exit(EXIT_FAILURE));
 	fdf_vars_init(fdf);
 	fdf->mlx = mlx_init();
 	if (fdf->mlx == NULL)
